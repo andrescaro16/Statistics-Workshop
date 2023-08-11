@@ -1,0 +1,295 @@
+---
+title: "DIANA_MARIA_ARANGO_BOTERO_-_ANDRÉS_JULIAN_CARO_RESTREPO"
+authors: "Andres Julian Caro Restrepo, Juan Esteban Avendaño Castaño, Julian Andrés Romero Hinestroza, Andrés Prada Rodríguez"
+date: "2023-07-30"
+output: html_document
+---
+
+# Bloque 0
+
+## Problema 1
+
+```{r}
+x <- 256
+```
+
+```{r}
+print(x)
+```
+
+```{r}
+y <- 559;y
+```
+
+```{r}
+secuencia <- seq(20, 35)
+print(secuencia)
+```
+
+```{r}
+secuencia_1 <- seq(122, 137)
+print(secuencia_1)
+```
+
+```{r}
+secuencia_2 <- 122:137
+print(secuencia_2)
+```
+
+```{r}
+secuencia_1 <- seq(122, 137, 3)
+secuencia_3 <- secuencia_1
+print(secuencia_3)
+```
+
+```{r}
+#secuencia_1 <- 122:137,by=3
+secuencia_3 <- secuencia_1
+print(secuencia_3)
+```
+
+## Problema 2
+
+```{r}
+vector_1 <- matrix(122:137)
+print(vector_1)
+```
+
+```{r}
+matriz_1 <- matrix(122:137, nrow = 4)
+```
+
+```{r}
+z <- 0:10
+vector_2 <- z^3
+print(vector_2)
+```
+
+```{r}
+plot(z, pch = 16, col = "red", main = "Gráfica de puntos de z", xlab = "Índice", ylab = "Valor de z")
+```
+
+```{r}
+vector_2 <- z^3
+plot(vector_2, pch = 16, type = "o", col = "red", main = "Gráfica de puntos de vector_2", xlab = "Índice", ylab = "Valor de z")
+```
+
+```{r}
+matriz_1[3,2] <- 135
+print(matriz_1)
+```
+
+```{r}
+plot(matriz_1[,2], pch = 16, col = "red", main = "Gráfica de puntos de segunda columna", xlab = "Fila", ylab = "Valor de columna")
+```
+
+# Bloque 1
+
+## Problema 3
+
+```{r}
+#install.packages("readxl")
+library(readxl)
+Info_clientes_banco <- read_excel("~/GitHub/R-Scripts/Databases/Info_clientes_banco.xlsx")
+```
+
+## Problema 4
+
+**ID_cliente:** Cualitativa y ordinal
+
+**Asesor:** Cualitativa y nominal
+
+**Sucursal:** Cualitativa y nominal
+
+**Segmento:** Cualitativa y ordinal
+
+**Tipo_cliente:** Cualitativa y nominal
+
+**Cuenta_corriente:** Cualitativa y discreta
+
+**Saldo_cuenta_corriente:** Cuantitativa y continua
+
+**Cuenta_ahorros:** Cuantitativa y discreta
+
+**Saldo_cuenta_ahorros:** Cuantitativa y continua
+
+**Credito_vivienda:** Cuantitativa y discreta
+
+**Saldo_credito_vivienda:** Cuantitativa y continua
+
+**Credito_vivienda:** Cuantitativa y discreta
+
+**Vehiculo_1:** Cuantitativa y discreta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+**Valor_vehiculo_1:** Cuantitativa y discreta
+
+**Vehiculo_2:** Cuantitativa y discreta!!!!!!!!!!!!!!!!!!!!
+
+**Valor_vehiculo_2:** Cuantitativa y discreta
+
+**Inmueble_1:** Cuantitativa y discreta
+
+**Valor_inmueble_1:** Cuantitativa y discreta
+
+**Inmueble_2:** Cuantitativa y discreta
+
+**Valor_inmueble_2:** Cuantitativa y discreta
+
+## Problema 5
+
+```{r}
+# DATOS
+
+asesores <- table(Info_clientes_banco$Asesor)
+totalAsesores <- sum(asesores)
+relativaAsesores <- asesores / totalAsesores
+
+sucursal <- table(Info_clientes_banco$Sucursal)
+totalSucursal <- sum(sucursal)
+relativaSucursal <- sucursal / totalSucursal
+
+segmento <- table(Info_clientes_banco$Segmento)
+totalSegmento <- sum(segmento)
+relativaSegmento <- segmento / totalSegmento
+
+tipo_cliente <- table(Info_clientes_banco$Tipo_Cliente)
+totalTipoCliente <- sum(tipo_cliente)
+relativaTipoCliente <- tipo_cliente / totalTipoCliente
+
+# TABLAS
+print("-------------------------ASESORES------------------------")
+tablaAsesores <- cbind(asesores, relativaAsesores)
+colnames(tablaAsesores) <- c("Frecuencia Absoluta", "Frecuencia Relativa")
+print(tablaAsesores)
+
+print("-------------------------SUCURSAL------------------------")
+tablaSucursal <- cbind(sucursal, relativaSucursal)
+colnames(tablaSucursal) <- c("Frecuencia Absoluta", "Frecuencia Relativa")
+print(tablaSucursal)
+
+print("-------------------------SEGMENTO------------------------")
+tablaSegmento <- cbind(segmento, relativaSegmento)
+colnames(tablaSegmento) <- c("Frecuencia Absoluta", "Frecuencia Relativa")
+print(tablaSegmento)
+
+print("-------------------------TIPO_CLIENTE------------------------")
+tablaTipoCliente <- cbind(tipo_cliente, relativaTipoCliente)
+colnames(tablaTipoCliente) <- c("Frecuencia Absoluta", "Frecuencia Relativa")
+print(tablaTipoCliente)
+```
+
+## Problema 6
+
+```{r}
+(asesores_cuenta_corriente <- Info_clientes_banco[Info_clientes_banco$Cuenta_corriente == 1, ])
+```
+
+## Problema 7
+
+```{r}
+(vec <- table(asesores_cuenta_corriente$Asesor))
+```
+
+```{r}
+barplot(vec, col = "blue", main = "Cuentas Corrientes abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas Corrientes")
+```
+
+## Problema 8
+
+### Cuentas de Ahorros
+
+```{r}
+(asesores_cuenta_ahorros <- Info_clientes_banco[Info_clientes_banco$Cuenta_ahorros == 1, ])
+```
+
+```{r}
+(vec2 <- table(asesores_cuenta_ahorros$Asesor))
+```
+
+```{r}
+barplot(vec2, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas de Ahorros")
+```
+
+### Créditos de Davivienda
+
+```{r}
+(asesores_credito <- Info_clientes_banco[Info_clientes_banco$Credito_vivienda == 1, ])
+```
+
+```{r}
+(vec3 <- table(asesores_credito$Asesor))
+```
+
+```{r}
+barplot(vec3, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas de Ahorros")
+```
+
+## Problema 9
+
+```{r}
+saldo <- Info_clientes_banco$Saldo_cuenta_corriente;saldo
+```
+
+## Problema 10
+
+```{r}
+saldoTotal <- sum(saldo);saldoTotal
+```
+
+## Problema 11
+
+```{r}
+resultado_suma_Saldo_cuenta_ahorros <- sum(Info_clientes_banco$Saldo_cuenta_ahorros)
+resultado_suma_Saldo_cuenta_ahorros
+
+resultado_suma_Saldo_cuenta_corriente <- sum(Info_clientes_banco$Saldo_cuenta_corriente)
+resultado_suma_Saldo_cuenta_corriente
+
+if (resultado_suma_Saldo_cuenta_ahorros > resultado_suma_Saldo_cuenta_corriente) {
+  print("El banco tiene mas dinero en las cuentas de ahorros")
+} else {
+  print("El banco tiene mas dinero en las cuentas corrientes")
+}
+
+Dinero_total <- resultado_suma_Saldo_cuenta_ahorros + resultado_suma_Saldo_cuenta_corriente
+Dinero_total
+
+porcentaje_ahorros <- (resultado_suma_Saldo_cuenta_ahorros / Dinero_total) * 100
+
+porcentaje_corriente <- (resultado_suma_Saldo_cuenta_corriente / Dinero_total) * 100
+
+print(porcentaje_ahorros)
+
+print(porcentaje_corriente)
+
+
+```
+
+## Problema 13
+
+```{r}
+barplot(tipo_cliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Absoluto")
+barplot(relativaTipoCliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Relativo")
+barplot(segmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Absoluto")
+barplot(relativaSegmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Relativo")
+```
+
+# Bloque 2
+
+## Problema 14
+
+```{r}
+Info_clientes_banco$Vehículos <- Info_clientes_banco$Veh_1 + Info_clientes_banco$Veh_2
+
+Info_clientes_banco$Valor_vehículos <- Info_clientes_banco$Valor_veh_1 + Info_clientes_banco$Valor_veh_2
+
+Info_clientes_banco_ampliada <- Info_clientes_banco
+
+head(Info_clientes_banco_ampliada)
+```
+
+## Problema 15
+
+```{r}
+(valor_vehiculos <- Info_clientes_banco_ampliada[Info_clientes_banco_ampliada$Vehículos > 0, c(21)])
+```
