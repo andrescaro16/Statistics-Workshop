@@ -294,6 +294,7 @@ head(Info_clientes_banco_ampliada)
 (valor_vehiculos <- Info_clientes_banco_ampliada[Info_clientes_banco_ampliada$Vehículos > 0, c(21)])
 ```
 
+<<<<<<< HEAD
 ## Problema 16
 
 ```{r}
@@ -308,3 +309,16 @@ clientes_con_cuentas <- Info_clientes_banco_ampliada$ID_cliente[Info_clientes_ba
 cantidad_clientes_con_cuentas <- length(clientes_con_cuentas); cantidad_clientes_con_cuentas
 ```
 
+=======
+## Problema 18
+
+```{r}
+inm_1 <- Info_clientes_banco$Inmueble_1 == 1
+
+inm_2 <- Info_clientes_banco$Inmueble_2 == 1
+
+value_inm <- Info_clientes_banco$Valor_inmuble_1 + Info_clientes_banco$Valor_inmuble_2 > 600000000
+
+(idClientesInmuebles <- Info_clientes_banco[ inm_1 & inm_2 & value_inm, 1])
+```
+>>>>>>> f4c5322cae046b071b15b1fcfcf0b81d57cd8855
