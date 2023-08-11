@@ -293,3 +293,18 @@ head(Info_clientes_banco_ampliada)
 ```{r}
 (valor_vehiculos <- Info_clientes_banco_ampliada[Info_clientes_banco_ampliada$Vehículos > 0, c(21)])
 ```
+
+## Problema 16
+
+```{r}
+hist(valor_vehiculos$Valor_vehículos, main = "Cantidad de clientes", xlab = "Valor Vehiculos", ylab = "Cantidad de personas")
+hist(valor_vehiculos$Valor_vehículos,main = "Cantidad de clientes porcentual", freq = FALSE, xlab = "Valor vehiculos", ylab = "Cantidad de personas porcentual")
+```
+
+## Problema 17
+
+```{r}
+clientes_con_cuentas <- Info_clientes_banco_ampliada$ID_cliente[Info_clientes_banco_ampliada$Cuenta_ahorros == "1" | Info_clientes_banco_ampliada$Cuenta_corriente == "1"]; clientes_con_cuentas
+cantidad_clientes_con_cuentas <- length(clientes_con_cuentas); cantidad_clientes_con_cuentas
+```
+
