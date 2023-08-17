@@ -356,15 +356,46 @@ saldos_cuentas_corrientes <- saldos_cuentas_corrientes_tabla$Saldo_cuenta_corrie
 ```
 
 ```{r}
-mean(saldos_cuentas_corrientes)
+test <- c(1,2,2,2,3,4,5,9,2,3,3)
 
+# Media o promedio
+mean(test)
 
-# install.packages("matrixStats")
-library(matrixStats)
-Mode(saldos_cuentas_corrientes)
+# Moda
+#install.packages("modeest")
+library(modeest)
+mfv(test)
 
-# Imprimir la moda
-print(moda)
+# Mediana
+median(test)
+```
 
-median(saldos_cuentas_corrientes)
+```{r}
+# Calculemos percentiles y cuartiles
+# Esta función calcula automáticamente los cuartiles
+
+# Cuartil 0.25
+quantile(test)
+
+# Percentil
+#quantile(test, 0.15)
+quantile(test, seq(0, 1, 0.01))
+
+# Deciles 
+quantile(test, seq(0, 1, by=0.1))
+```
+
+```{r}
+
+# Rango
+range(test)
+
+# Rango intercuartílico
+IQR(test)
+
+# Varianza
+var(test)
+
+# Desviación Estandar
+sd(test)
 ```
