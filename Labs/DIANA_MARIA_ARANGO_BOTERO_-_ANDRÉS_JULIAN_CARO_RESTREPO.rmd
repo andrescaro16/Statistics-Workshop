@@ -93,7 +93,7 @@ plot(matriz_1[,2], pch = 16, col = "red", main = "Gráfica de puntos de segunda 
 ```{r}
 #install.packages("readxl")
 library(readxl)
-Info_clientes_banco <- read_excel("C:/Users/Julianskiy/Downloads/Info_clientes_banco.xlsx")
+Info_clientes_banco <- read_excel("~/workspace/subjects/Estadistica/labs/Statistics-Workshop/Databases/Info_clientes_banco.xlsx")
 ```
 
 ## Problema 4
@@ -344,4 +344,27 @@ inm_2 <- Info_clientes_banco$Inmueble_2 == 1
 value_inm <- Info_clientes_banco$Valor_inmuble_1 + Info_clientes_banco$Valor_inmuble_2 > 600000000
 
 (idClientesInmuebles <- Info_clientes_banco[ inm_1 & inm_2 & value_inm, 1])
+```
+
+## Problema 19
+
+### Análisis descriptivo Saldos cuenta corriente
+
+```{r}
+saldos_cuentas_corrientes_tabla <- Info_clientes_banco[Info_clientes_banco$Cuenta_corriente == 1,]
+saldos_cuentas_corrientes <- saldos_cuentas_corrientes_tabla$Saldo_cuenta_corriente; saldos_cuentas_corrientes
+```
+
+```{r}
+mean(saldos_cuentas_corrientes)
+
+
+# install.packages("matrixStats")
+library(matrixStats)
+Mode(saldos_cuentas_corrientes)
+
+# Imprimir la moda
+print(moda)
+
+median(saldos_cuentas_corrientes)
 ```
