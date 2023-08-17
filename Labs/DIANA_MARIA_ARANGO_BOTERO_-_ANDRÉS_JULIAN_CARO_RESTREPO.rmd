@@ -1,8 +1,11 @@
 ---
 title: "DIANA_MARIA_ARANGO_BOTERO_-_ANDRÉS_JULIAN_CARO_RESTREPO"
-authors: "Andres Julian Caro Restrepo, Juan Esteban Avendaño Castaño, Julian Andrés Romero Hinestroza, Andrés Prada Rodríguez"
+authors: Andres Julian Caro Restrepo, Juan Esteban Avendaño Castaño, Julian Andrés
+  Romero Hinestroza, Andrés Prada Rodríguez
 date: "2023-07-30"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 # Bloque 0
@@ -51,7 +54,7 @@ print(secuencia_3)
 ## Problema 2
 
 ```{r}
-vector_1 <- matrix(122:137)
+vector_1 <- matrix(122:137, 2, 2)
 print(vector_1)
 ```
 
@@ -71,7 +74,7 @@ plot(z, pch = 16, col = "red", main = "Gráfica de puntos de z", xlab = "Índice
 
 ```{r}
 vector_2 <- z^3
-plot(vector_2, pch = 16, type = "o", col = "red", main = "Gráfica de puntos de vector_2", xlab = "Índice", ylab = "Valor de z")
+plot(vector_2, type = "l", col = "red", main = "Gráfica de puntos de vector_2", xlab = "Índice", ylab = "Valor de z")
 ```
 
 ```{r}
@@ -90,12 +93,12 @@ plot(matriz_1[,2], pch = 16, col = "red", main = "Gráfica de puntos de segunda 
 ```{r}
 #install.packages("readxl")
 library(readxl)
-Info_clientes_banco <- read_excel("~/GitHub/R-Scripts/Databases/Info_clientes_banco.xlsx")
+Info_clientes_banco <- read_excel("C:/Users/Julianskiy/Downloads/Info_clientes_banco.xlsx")
 ```
 
 ## Problema 4
 
-**ID_cliente:** Cualitativa y ordinal
+**ID_cliente:** Cualitativa y nominal
 
 **Asesor:** Cualitativa y nominal
 
@@ -105,33 +108,31 @@ Info_clientes_banco <- read_excel("~/GitHub/R-Scripts/Databases/Info_clientes_ba
 
 **Tipo_cliente:** Cualitativa y nominal
 
-**Cuenta_corriente:** Cualitativa y discreta
+**Cuenta_corriente:** Cualitativa y nominal
 
 **Saldo_cuenta_corriente:** Cuantitativa y continua
 
-**Cuenta_ahorros:** Cuantitativa y discreta
+**Cuenta_ahorros:** Cualitativa y nominal
 
 **Saldo_cuenta_ahorros:** Cuantitativa y continua
 
-**Credito_vivienda:** Cuantitativa y discreta
+**Credito_vivienda:** Cualitativa y nominal
 
 **Saldo_credito_vivienda:** Cuantitativa y continua
 
-**Credito_vivienda:** Cuantitativa y discreta
-
-**Vehiculo_1:** Cuantitativa y discreta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+**Vehiculo_1:** Cualitativa y nominal
 
 **Valor_vehiculo_1:** Cuantitativa y discreta
 
-**Vehiculo_2:** Cuantitativa y discreta!!!!!!!!!!!!!!!!!!!!
+**Vehiculo_2:** Cualitativa y nominal
 
 **Valor_vehiculo_2:** Cuantitativa y discreta
 
-**Inmueble_1:** Cuantitativa y discreta
+**Inmueble_1:** Cualitativa y nominal
 
 **Valor_inmueble_1:** Cuantitativa y discreta
 
-**Inmueble_2:** Cuantitativa y discreta
+**Inmueble_2:** Cualitativa y nominal
 
 **Valor_inmueble_2:** Cuantitativa y discreta
 
@@ -178,6 +179,18 @@ colnames(tablaTipoCliente) <- c("Frecuencia Absoluta", "Frecuencia Relativa")
 print(tablaTipoCliente)
 ```
 
+*Gracias a esas tablas podemos concluir lo siguiente:*
+
+* Los asesores con más clientes son Jdalvarez y Tperez. 
+
+* La sucursal con más clientes es la de PRADO, de donde provienen 27% de los clientes.
+
+* La mitad de los clientes tienen el plan basico o basico-plus
+
+* El 38% de los clientes son de tipo rehen
+
+
+
 ## Problema 6
 
 ```{r}
@@ -188,11 +201,9 @@ print(tablaTipoCliente)
 
 ```{r}
 (vec <- table(asesores_cuenta_corriente$Asesor))
-```
-
-```{r}
 barplot(vec, col = "blue", main = "Cuentas Corrientes abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas Corrientes")
 ```
+* Gracias a la grafica s epuede apreciar que, de hecho, todos los asesores tienen un porcentaje de cliente mas o menos similar 
 
 ## Problema 8
 
@@ -209,6 +220,8 @@ barplot(vec, col = "blue", main = "Cuentas Corrientes abiertas por Asesor", xlab
 ```{r}
 barplot(vec2, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas de Ahorros")
 ```
+* En cuanto a cuentas de ahorros, podemos notar menos uniformidad en los datos.
+
 
 ### Créditos de Davivienda
 
@@ -227,13 +240,13 @@ barplot(vec3, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xla
 ## Problema 9
 
 ```{r}
-saldo <- Info_clientes_banco$Saldo_cuenta_corriente;saldo
+saldo_cuentas_corrientes <- Info_clientes_banco$Saldo_cuenta_corriente; saldo_cuentas_corrientes
 ```
 
 ## Problema 10
 
 ```{r}
-saldoTotal <- sum(saldo);saldoTotal
+#saldoTotal <- sum(saldo);saldoTotal
 ```
 
 ## Problema 11
@@ -264,6 +277,9 @@ print(porcentaje_corriente)
 
 
 ```
+## Problema 12
+*Repetido del punto 5*
+
 
 ## Problema 13
 
@@ -294,31 +310,27 @@ head(Info_clientes_banco_ampliada)
 (valor_vehiculos <- Info_clientes_banco_ampliada[Info_clientes_banco_ampliada$Vehículos > 0, c(21)])
 ```
 
-<<<<<<< HEAD
-## Problema 16
+## problema 16
+
+## problema 17 
 
 ```{r}
-hist(valor_vehiculos$Valor_vehículos, main = "Cantidad de clientes", xlab = "Valor Vehiculos", ylab = "Cantidad de personas")
-hist(valor_vehiculos$Valor_vehículos,main = "Cantidad de clientes porcentual", freq = FALSE, xlab = "Valor vehiculos", ylab = "Cantidad de personas porcentual")
+options(max.print = 10000)
+
+clientes_con_cuenta <- Info_clientes_banco$ID_cliente[Info_clientes_banco$Cuenta_corriente == 1 | Info_clientes_banco$Cuenta_ahorros == 1]
+
+clientes_con_cuenta
+
+
 ```
 
-## Problema 17
 
 ```{r}
-clientes_con_cuentas <- Info_clientes_banco_ampliada$ID_cliente[Info_clientes_banco_ampliada$Cuenta_ahorros == "1" | Info_clientes_banco_ampliada$Cuenta_corriente == "1"]; clientes_con_cuentas
-cantidad_clientes_con_cuentas <- length(clientes_con_cuentas); cantidad_clientes_con_cuentas
+options(max.print = 10000)
+
+clientes_sin_cuenta <- Info_clientes_banco$ID_cliente[Info_clientes_banco$Cuenta_corriente == 0 & Info_clientes_banco$Cuenta_ahorros == 0]
+
+clientes_sin_cuenta
+
+
 ```
-
-=======
-## Problema 18
-
-```{r}
-inm_1 <- Info_clientes_banco$Inmueble_1 == 1
-
-inm_2 <- Info_clientes_banco$Inmueble_2 == 1
-
-value_inm <- Info_clientes_banco$Valor_inmuble_1 + Info_clientes_banco$Valor_inmuble_2 > 600000000
-
-(idClientesInmuebles <- Info_clientes_banco[ inm_1 & inm_2 & value_inm, 1])
-```
->>>>>>> f4c5322cae046b071b15b1fcfcf0b81d57cd8855
