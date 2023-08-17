@@ -98,7 +98,7 @@ Info_clientes_banco <- read_excel("C:/Users/Julianskiy/Downloads/Info_clientes_b
 
 ## Problema 4
 
-**ID_cliente:** Cualitativa y nominal
+**ID_cliente:** Cualitativa y ordinal
 
 **Asesor:** Cualitativa y nominal
 
@@ -181,15 +181,13 @@ print(tablaTipoCliente)
 
 *Gracias a esas tablas podemos concluir lo siguiente:*
 
-* Los asesores con más clientes son Jdalvarez y Tperez. 
+-   Los asesores con más clientes son Jdalvarez y Tperez.
 
-* La sucursal con más clientes es la de PRADO, de donde provienen 27% de los clientes.
+-   La sucursal con más clientes es la de PRADO, de donde provienen 27% de los clientes.
 
-* La mitad de los clientes tienen el plan basico o basico-plus
+-   La mitad de los clientes tienen el plan basico o basico-plus
 
-* El 38% de los clientes son de tipo rehen
-
-
+-   El 38% de los clientes son de tipo rehen
 
 ## Problema 6
 
@@ -203,7 +201,8 @@ print(tablaTipoCliente)
 (vec <- table(asesores_cuenta_corriente$Asesor))
 barplot(vec, col = "blue", main = "Cuentas Corrientes abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas Corrientes")
 ```
-* Gracias a la grafica s epuede apreciar que, de hecho, todos los asesores tienen un porcentaje de cliente mas o menos similar 
+
+-   Gracias a la grafica se puede apreciar que todos los asesores tienen un porcentaje de clientes más o menos similar
 
 ## Problema 8
 
@@ -220,8 +219,8 @@ barplot(vec, col = "blue", main = "Cuentas Corrientes abiertas por Asesor", xlab
 ```{r}
 barplot(vec2, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas de Ahorros")
 ```
-* En cuanto a cuentas de ahorros, podemos notar menos uniformidad en los datos.
 
+-   En cuanto a cuentas de ahorros, podemos notar menos uniformidad en los datos.
 
 ### Créditos de Davivienda
 
@@ -277,9 +276,10 @@ print(porcentaje_corriente)
 
 
 ```
-## Problema 12
-*Repetido del punto 5*
 
+## Problema 12
+
+*Repetido del punto 5*
 
 ## Problema 13
 
@@ -310,47 +310,30 @@ head(Info_clientes_banco_ampliada)
 (valor_vehiculos <- Info_clientes_banco_ampliada[Info_clientes_banco_ampliada$Vehículos > 0, c(21)])
 ```
 
-## problema 16
-
-## problema 17 
-
-```{r}
-options(max.print = 10000)
-
-clientes_con_cuenta <- Info_clientes_banco$ID_cliente[Info_clientes_banco$Cuenta_corriente == 1 | Info_clientes_banco$Cuenta_ahorros == 1]
-
-clientes_con_cuenta
-
-
-```
-
-
-```{r}
-options(max.print = 10000)
-
-clientes_sin_cuenta <- Info_clientes_banco$ID_cliente[Info_clientes_banco$Cuenta_corriente == 0 & Info_clientes_banco$Cuenta_ahorros == 0]
-
-clientes_sin_cuenta
-
-
-```
-
-<<<<<<< HEAD
 ## Problema 16
 
 ```{r}
-hist(valor_vehiculos$Valor_vehículos, main = "Cantidad de clientes", xlab = "Valor Vehiculos", ylab = "Cantidad de personas")
-hist(valor_vehiculos$Valor_vehículos,main = "Cantidad de clientes porcentual", freq = FALSE, xlab = "Valor vehiculos", ylab = "Cantidad de personas porcentual")
+hist(valor_vehiculos,
+     main = "Cantidad de clientes",
+     xlab = "Valor Vehiculos",
+     ylab = "Cantidad de personas")
+hist(
+  valor_vehiculos,
+  main = "Cantidad de clientes porcentual",
+  freq = FALSE,
+  xlab = "Valor vehiculos",
+  ylab = "Cantidad de personas porcentual"
+)
 ```
 
 ## Problema 17
 
 ```{r}
-clientes_con_cuentas <- Info_clientes_banco_ampliada$ID_cliente[Info_clientes_banco_ampliada$Cuenta_ahorros == "1" | Info_clientes_banco_ampliada$Cuenta_corriente == "1"]; clientes_con_cuentas
-cantidad_clientes_con_cuentas <- length(clientes_con_cuentas); cantidad_clientes_con_cuentas
+options(max.print = 10000)
+
+(clientes_con_cuenta <- Info_clientes_banco$ID_cliente[Info_clientes_banco$Cuenta_corriente == 1 | Info_clientes_banco$Cuenta_ahorros == 1])
 ```
 
-=======
 ## Problema 18
 
 ```{r}
@@ -362,5 +345,3 @@ value_inm <- Info_clientes_banco$Valor_inmuble_1 + Info_clientes_banco$Valor_inm
 
 (idClientesInmuebles <- Info_clientes_banco[ inm_1 & inm_2 & value_inm, 1])
 ```
->>>>>>> f4c5322cae046b071b15b1fcfcf0b81d57cd8855
->>>>>>> a3246b069488cada324d9886acbc86b342c989c3
