@@ -300,7 +300,7 @@ measure <- function(data, column, field, filter) {
     range_value <- range_value[2]-range_value[1]
     desviacion_value <- sd(query)
     
-    # Result
+    # Resultado
     measures <- c(Promedio = mean_value, Mediana = median_value, Rango = range_value, Desviación = desviacion_value)
     
     # Guardar resultados en la lista
@@ -343,4 +343,73 @@ sucursales_cuentas_credito <- unique(cuentas_credito_tabla$Sucursal)
 
 ```{r}
 measure(cuentas_credito_tabla, "Sucursal", "Saldo_credito_vivienda", sucursales_cuentas_credito)
+```
+
+### Desempeños
+
+```{r}
+# --- Función para conocer el desempeño de un grupo por promedio de dinero movido ---
+
+# Query de ejemplo:
+# cuentas_corrientes_tabla[cuentas_corrientes_tabla$Asesor == "LVELEZ",]$Saldo_cuenta_corriente
+
+# Donde:
+# data = cuentas_corrientes_tabla
+# who = "Asesor"
+# list_of_who = asesores[i] = "LVELEZ"
+# account = "Saldo_cuenta_corriente"
+
+averageMoneyMoved <- function(data, who, list_of_who, account) {
+  results <- list()
+  
+  for(i in 1:length(list_of_who)) {
+    
+    # Query
+    query <- data[data[[who]] == list_of_who[i], ][[account]]
+    
+    # Resultado (Promedio)
+    result <- (sum(query) / length(query))
+    
+    # Guardar resultados en la lista
+    results[[list_of_who[i]]] <- result
+  }
+  
+  return(results)
+}
+```
+
+### Asesores
+
+```{r}
+asesores <- unique(Info_clientes_banco$Asesor)
+```
+
+Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por los **asesores** con clientes con **cuentas corrientes** y los ordenamos de mayor a menor por dicha cantidad:
+
+```{r}
+sort(sapply(averageMoneyMoved(cuentas_corrientes_tabla, "Asesor", asesores, "Saldo_cuenta_corriente"), max), decreasing = TRUE)
+```
+
+Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por los **asesores** con clientes con **crédito vivienda** y los ordenamos de mayor a menor por dicha cantidad:
+
+```{r}
+sort(sapply(averageMoneyMoved(cuentas_credito_tabla, "Asesor", asesores, "Saldo_credito_vivienda"), max), decreasing = TRUE)
+```
+
+### Sucursales
+
+```{r}
+sucursales <- unique(Info_clientes_banco$Sucursal)
+```
+
+Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por las **sucursales** con clientes con **cuentas corrientes** y los ordenamos de mayor a menor por dicha cantidad:
+
+```{r}
+sort(sapply(averageMoneyMoved(cuentas_corrientes_tabla, "Sucursal", sucursales, "Saldo_cuenta_corriente"), max), decreasing = TRUE)
+```
+
+Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por las **sucursales** con clientes con **crédito vivienda** y los ordenamos de mayor a menor por dicha cantidad:
+
+```{r}
+sort(sapply(averageMoneyMoved(cuentas_credito_tabla, "Sucursal", sucursales, "Saldo_credito_vivienda"), max), decreasing = TRUE)
 ```
