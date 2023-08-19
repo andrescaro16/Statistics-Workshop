@@ -242,7 +242,7 @@ barplot(vec3, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xla
 saldo_cuentas_corrientes <- Info_clientes_banco$Saldo_cuenta_corriente; saldo_cuentas_corrientes
 ```
 
-## Problema 10
+## Problema 10!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ```{r}
 #saldoTotal <- sum(saldo);saldoTotal
@@ -313,12 +313,12 @@ head(Info_clientes_banco_ampliada)
 ## Problema 16
 
 ```{r}
-hist(valor_vehiculos,
+hist(valor_vehiculos$Valor_vehículos,
      main = "Cantidad de clientes",
      xlab = "Valor Vehiculos",
      ylab = "Cantidad de personas")
 hist(
-  valor_vehiculos,
+  valor_vehiculos$Valor_vehículos,
   main = "Cantidad de clientes porcentual",
   freq = FALSE,
   xlab = "Valor vehiculos",
@@ -348,54 +348,77 @@ value_inm <- Info_clientes_banco$Valor_inmuble_1 + Info_clientes_banco$Valor_inm
 
 ## Problema 19
 
-### Análisis descriptivo Saldos cuenta corriente
+### Análisis descriptivo
 
 ```{r}
-saldos_cuentas_corrientes_tabla <- Info_clientes_banco[Info_clientes_banco$Cuenta_corriente == 1,]
-saldos_cuentas_corrientes <- saldos_cuentas_corrientes_tabla$Saldo_cuenta_corriente; saldos_cuentas_corrientes
+# --- Función para abstraer lógica de obtención de medidas descriptivas ---
+
+# Query de ejemplo:
+# cuentas_corrientes_tabla[cuentas_corrientes_tabla$Sucursal == "CENTRO",]$Saldo_cuenta_corriente
+
+# Donde:
+# data = cuentas_corrientes_tabla
+# column = "Sucursal"
+# field = "Saldo_cuenta_corriente"
+# filter = sucursales
+
+measure <- function(data, column, field, filter) {
+  
+  results <- list()
+  
+  for(i in 1:length(filter)) {
+    
+    # Query
+    query <- data[data[[column]] == filter[i], ][[field]]
+    
+    # Procesamiento
+    mean_value <- mean(query)
+    median_value <- median(query)
+    range_value <- range(query)
+    range_value <- range_value[2]-range_value[1]
+    desviacion_value <- sd(query)
+    
+    # Result
+    measures <- c(Promedio = mean_value, Mediana = median_value, Rango = range_value, Desviación = desviacion_value)
+    
+    # Guardar resultados en la lista
+    results[[filter[i]]] <- measures
+  }
+  
+  return(results)
+}
+```
+
+### Análisis descriptivo - Saldos cuenta corriente
+
+```{r}
+cuentas_corrientes_tabla <- Info_clientes_banco[Info_clientes_banco$Cuenta_corriente == 1,]
+saldos_cuentas_corrientes <- cuentas_corrientes_tabla$Saldo_cuenta_corriente; 
+
+saldos_cuentas_corrientes
 ```
 
 ```{r}
-test <- c(1,2,2,2,3,4,5,9,2,3,3)
-
-# Media o promedio
-mean(test)
-
-# Moda
-#install.packages("modeest")
-library(modeest)
-mfv(test)
-
-# Mediana
-median(test)
+sucursales_cuentas_corrientes <- unique(cuentas_corrientes_tabla$Sucursal)
 ```
 
 ```{r}
-# Calculemos percentiles y cuartiles
-# Esta función calcula automáticamente los cuartiles
+measure(cuentas_corrientes_tabla, "Sucursal", "Saldo_cuenta_corriente", sucursales_cuentas_corrientes)
+```
 
-# Cuartil 0.25
-quantile(test)
+### Análisis descriptivo - Saldos crédito vivienda
 
-# Percentil
-#quantile(test, 0.15)
-quantile(test, seq(0, 1, 0.01))
+```{r}
+cuentas_credito_tabla <- Info_clientes_banco[Info_clientes_banco$Credito_vivienda == 1,]
+saldos_cuentas_credito <- cuentas_credito_tabla$Saldo_credito_vivienda; 
 
-# Deciles 
-quantile(test, seq(0, 1, by=0.1))
+saldos_cuentas_credito
 ```
 
 ```{r}
+sucursales_cuentas_credito <- unique(cuentas_credito_tabla$Sucursal)
+```
 
-# Rango
-range(test)
-
-# Rango intercuartílico
-IQR(test)
-
-# Varianza
-var(test)
-
-# Desviación Estandar
-sd(test)
+```{r}
+measure(cuentas_credito_tabla, "Sucursal", "Saldo_credito_vivienda", sucursales_cuentas_credito)
 ```
