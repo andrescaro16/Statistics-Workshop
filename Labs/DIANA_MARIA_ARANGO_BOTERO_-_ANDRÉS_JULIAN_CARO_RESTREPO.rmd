@@ -196,7 +196,6 @@ print(porcentaje_ahorros)
 
 print(porcentaje_corriente)
 
-
 ```
 
 ## Problema 12
@@ -206,7 +205,7 @@ print(porcentaje_corriente)
 ## Problema 13
 
 ```{r}
-barplot(tipo_cliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Absoluto")
+barplot(tipo_cliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Absoluto", cex.names=1)
 barplot(relativaTipoCliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Relativo")
 barplot(segmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Absoluto")
 barplot(relativaSegmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Relativo")
@@ -322,6 +321,7 @@ saldos_cuentas_corrientes
 
 ```{r}
 sucursales_cuentas_corrientes <- unique(cuentas_corrientes_tabla$Sucursal)
+
 ```
 
 ```{r}
