@@ -128,7 +128,7 @@ barplot(vec, col = "blue", main = "Cuentas Corrientes abiertas por Asesor", xlab
 
 ## Problema 8
 
-### Cuentas de Ahorros
+### Cuentas de ahorros
 
 ```{r}
 (asesores_cuenta_ahorros <- Info_clientes_banco[Info_clientes_banco$Cuenta_ahorros == 1, ])
@@ -144,7 +144,7 @@ barplot(vec2, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xla
 
 -   En cuanto a cuentas de ahorros, podemos notar menos uniformidad en los datos.
 
-### Créditos de Davivienda
+### Créditos de vivienda
 
 ```{r}
 (asesores_credito <- Info_clientes_banco[Info_clientes_banco$Credito_vivienda == 1, ])
@@ -164,10 +164,10 @@ barplot(vec3, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xla
 saldo_cuentas_corrientes <- Info_clientes_banco$Saldo_cuenta_corriente; saldo_cuentas_corrientes
 ```
 
-## Problema 10!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+## Problema 10
 
 ```{r}
-#saldoTotal <- sum(saldo);saldoTotal
+saldoTotal <- sum(saldo_cuentas_corrientes);saldoTotal
 ```
 
 ## Problema 11
@@ -205,9 +205,13 @@ print(porcentaje_corriente)
 ## Problema 13
 
 ```{r}
+par(cex.axis=0.9)
 barplot(tipo_cliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Absoluto", cex.names=1)
+par(cex.axis=0.9)
 barplot(relativaTipoCliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Relativo")
+par(cex.axis=0.8)
 barplot(segmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Absoluto")
+par(cex.axis=0.8)
 barplot(relativaSegmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Relativo")
 ```
 
@@ -242,7 +246,7 @@ hist(
   valor_vehiculos$Valor_vehículos,
   main = "Cantidad de clientes porcentual",
   freq = FALSE,
-  xlab = "Valor vehiculos",
+  xlab = "Valor Vehiculos",
   ylab = "Cantidad de personas porcentual"
 )
 ```
@@ -320,7 +324,7 @@ saldos_cuentas_corrientes
 ```
 
 ```{r}
-sucursales_cuentas_corrientes <- unique(cuentas_corrientes_tabla$Sucursal)
+sucursales_cuentas_corrientes <- unique(cuentas_corrientes_tabla$Sucursal);sucursales_cuentas_corrientes
 
 ```
 
@@ -338,7 +342,7 @@ saldos_cuentas_credito
 ```
 
 ```{r}
-sucursales_cuentas_credito <- unique(cuentas_credito_tabla$Sucursal)
+sucursales_cuentas_credito <- unique(cuentas_credito_tabla$Sucursal);sucursales_cuentas_credito
 ```
 
 ```{r}
@@ -412,4 +416,17 @@ Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio
 
 ```{r}
 sort(sapply(averageMoneyMoved(cuentas_credito_tabla, "Sucursal", sucursales, "Saldo_credito_vivienda"), max), decreasing = TRUE)
+```
+### Tipos de clientes
+```{r}
+par(cex.axis=0.9)
+boxplot(
+  cuentas_corrientes_tabla$Saldo_cuenta_corriente ~ cuentas_corrientes_tabla$Tipo_Cliente, xlab = "Tipo de Cliente", ylab = "Saldo cuenta corriente"
+)
+
+par(cex.axis=0.9)
+boxplot(
+  cuentas_credito_tabla$Saldo_credito_vivienda ~ cuentas_credito_tabla$Tipo_Cliente, xlab = "Tipo de Cliente", ylab = "Saldo crédito de vivienda"
+)
+
 ```
