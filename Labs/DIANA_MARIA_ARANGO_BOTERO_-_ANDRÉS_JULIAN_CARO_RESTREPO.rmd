@@ -15,7 +15,7 @@ output:
 ```{r}
 #install.packages("readxl")
 library(readxl)
-Info_clientes_banco <- read_excel("C:/Users/Julianskiy/Desktop/Statistics-Workshop/Databases/Info_clientes_banco.xlsx")
+#Info_clientes_banco <- read_excel("C:/Users/Julianskiy/Desktop/Statistics-Workshop/Databases/Info_clientes_banco.xlsx")
 ```
 
 ## Problema 4
@@ -157,7 +157,8 @@ barplot(vec2, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xla
 ```{r}
 barplot(vec3, col = "blue", main = "Cuentas de Ahorros abiertas por Asesor", xlab = "Asesor", ylab = "Cuentas de Ahorros")
 ```
-- Analizando los datos, se puede observar que los asesores con los que en total se han abierto más cuentas corrientes y creditos de vivienda son Jdalvarez y Tperez
+
+-   Analizando los datos, se puede observar que los asesores con los que en total se han abierto más cuentas corrientes y creditos de vivienda son Jdalvarez y Tperez
 
 ## Problema 9
 
@@ -215,7 +216,8 @@ barplot(segmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento",
 par(cex.axis=0.8)
 barplot(relativaSegmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Relativo")
 ```
-- La gran mayoria de clientes son de tipo indeciso o de tipo rehen y en cuanto a segmento, la mayoria estan en el segmento básico o básico-plus
+
+-   La gran mayoria de clientes son de tipo indeciso o de tipo rehen y en cuanto a segmento, la mayoria estan en el segmento básico o básico-plus
 
 # Bloque 2
 
@@ -258,7 +260,8 @@ histogram(
 )
 
 ```
-- Los vehiculos de un valor elevado, de entre 200 y 400 millones representan una gran minoria de los clientes con vehiculo. Más del 90% de los clientes con vehiculo lo tienen hasta por un valor menor a 200 millones. 
+
+-   Los vehiculos de un valor elevado, de entre 200 y 400 millones representan una gran minoria de los clientes con vehiculo. Más del 90% de los clientes con vehiculo lo tienen hasta por un valor menor a 200 millones.
 
 ## Problema 17
 
@@ -420,13 +423,16 @@ Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio
 ```{r}
 sort(sapply(averageMoneyMoved(cuentas_corrientes_tabla, "Sucursal", sucursales, "Saldo_cuenta_corriente"), max), decreasing = TRUE)
 ```
+La sucursal que tiene mejor desempeño en los saldos de cuenta corriente es la "AMERICAS"
 
 Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por las **sucursales** con clientes con **crédito vivienda** y los ordenamos de mayor a menor por dicha cantidad:
 
 ```{r}
 sort(sapply(averageMoneyMoved(cuentas_credito_tabla, "Sucursal", sucursales, "Saldo_credito_vivienda"), max), decreasing = TRUE)
 ```
+
 ### Tipos de clientes
+
 ```{r}
 par(cex.axis=0.9)
 boxplot(
@@ -439,3 +445,4 @@ boxplot(
 )
 
 ```
+
