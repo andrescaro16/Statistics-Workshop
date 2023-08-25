@@ -207,13 +207,13 @@ print(porcentaje_corriente)
 ## Problema 13
 
 ```{r}
-par(cex.axis=0.9)
-barplot(tipo_cliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Absoluto", cex.names=1)
-par(cex.axis=0.9)
+par(cex.axis=0.7)
+barplot(tipo_cliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Absoluto")
+par(cex.axis=0.7)
 barplot(relativaTipoCliente, col = "blue", main = "Tipos de clientes", xlab = "Tipos de clientes", ylab = "Valor Relativo")
-par(cex.axis=0.8)
+par(cex.axis=0.7)
 barplot(segmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Absoluto")
-par(cex.axis=0.8)
+par(cex.axis=0.7)
 barplot(relativaSegmento, col = "red", main = "Segmento de Clientes", xlab = "Segmento", ylab = "Valor Relativo")
 ```
 
@@ -406,7 +406,7 @@ Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio
 sort(sapply(averageMoneyMoved(cuentas_corrientes_tabla, "Asesor", asesores, "Saldo_cuenta_corriente"), max), decreasing = TRUE)
 ```
 
-El asesor con mejores resultados en los saldo de cuentas corrientes es "MGOMEZ"
+Si nos basamos en el dinero movido el asesor con mejores resultados en los saldo de cuentas corrientes es "MGOMEZ"
 
 Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por los **asesores** con clientes con **crédito vivienda** y los ordenamos de mayor a menor por dicha cantidad:
 
@@ -414,7 +414,7 @@ Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio
 sort(sapply(averageMoneyMoved(cuentas_credito_tabla, "Asesor", asesores, "Saldo_credito_vivienda"), max), decreasing = TRUE)
 ```
 
-El asesor con mejores resultados en los saldo de cuentas de crédito es "NBERRIO"
+Si nos basamos en el dinero movido el asesor con mejores resultados en los saldo de cuentas de crédito es "NBERRIO"
 
 ### Sucursales
 
@@ -428,7 +428,7 @@ Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio
 sort(sapply(averageMoneyMoved(cuentas_corrientes_tabla, "Sucursal", sucursales, "Saldo_cuenta_corriente"), max), decreasing = TRUE)
 ```
 
-La sucursal que mueve más dinero en los saldos de cuenta corriente es la "AMERICAS"
+Si nos basamos en el dinero movido la sucursal con mejor desempeño en saldos de cuenta corriente es la "AMERICAS"
 
 Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio por las **sucursales** con clientes con **crédito vivienda** y los ordenamos de mayor a menor por dicha cantidad:
 
@@ -436,7 +436,7 @@ Aplicamos el método averageMoneyMoved para conocer el dinero movido en promedio
 sort(sapply(averageMoneyMoved(cuentas_credito_tabla, "Sucursal", sucursales, "Saldo_credito_vivienda"), max), decreasing = TRUE)
 ```
 
-La sucursal que mueve más dinero en los saldos de cuenta corriente es la "VILLA"
+Si nos basamos en el dinero movido la sucursal con mejor desempeño en saldos de cuenta corriente es la "VILLA"
 
 ### Tipos de clientes
 
@@ -455,7 +455,7 @@ boxplot(
 
 Sado cuenta corriente
 
-En esta parte encontramos que la mediana en todos los tipos de clientes se evidencia muy de cerca la una de la otra, lo que quiere decir que hay una cantidad muy similar de saldos en los diferentes tipos de clientes, con respecto a si el banco hace bien la segmentación de los tipos de clientes, desconocemos qué criterios se usan para esto y si nos basáramos en los saldos estaría mal echa puesto que todos los tipos de clientes tienen un rango muy similar lo cual nos podría llevar a juntarlos todos en simplemente clientes del banco con cuentas corriente.
+En esta parte encontramos que la mediana en todos los tipos de clientes se evidencia muy de cerca la una de la otra, lo que quiere decir que hay una cantidad muy similar de saldos en los diferentes tipos de clientes, con respecto a si el banco hace bien la segmentación de los tipos de clientes, desconocemos qué criterios se usan para esto y si nos basáramos en los saldos estaría mal hecha puesto que todos los tipos de clientes tienen un rango muy similar lo cual nos podría llevar a juntarlos todos en simplemente clientes del banco con cuentas corriente.
 
 Saldo crédito de vivienda
 
