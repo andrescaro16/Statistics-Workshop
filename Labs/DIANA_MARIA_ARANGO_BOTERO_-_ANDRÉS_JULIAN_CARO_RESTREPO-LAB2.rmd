@@ -1,0 +1,102 @@
+# Bloque 1
+
+## Ejercicio 1
+
+### a)
+
+```{r}
+lanzar_moneda <- function(p = 0.5) {
+  resultado <- ifelse(runif(1) < p, "Cara", "Cruz")
+  return(resultado)
+}
+resultado_lanzamiento <- lanzar_moneda(0.5);resultado_lanzamiento
+```
+
+### b)
+
+```{r}
+simulacion_lanzar_moneda<- function(n ,p = 0.5) {
+	vec <- 0
+	for(i in 1:n) {
+		vec[i] <- lanzar_moneda(p)
+	}
+	vec
+	table(vec)/n
+}
+monedas <- simulacion_lanzar_moneda(1234);monedas
+```
+
+### c)
+
+```{r}
+monedas_cargadas <- simulacion_lanzar_moneda(1234,0.73);monedas_cargadas
+```
+
+## Ejercicio 2
+
+### a)
+
+X es el espacio muestral X = {1,2,3,4,5,6}\
+P es la probabilidad de cada uno P = {1/6,1/6,1/6,1/6,1/6.1/6}
+
+### b)
+```{r}
+Simulacion_dado_seiscaras <- function(n=1,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)){
+  resultado_dado <- sample(1:6, n,prob=prob)
+}
+simulacion_lanzar_dado<- function(n,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)) {
+	vec1 <- 0
+	for(i in 1:n) {
+		vec1[i] <- Simulacion_dado_seiscaras(prob=prob)
+	}
+	vec1
+	table(vec1)/n
+}
+p_dado <- simulacion_lanzar_dado(1000);p_dado
+```
+
+### c)
+```{r}
+simulacion_lanzar_2_dados<- function(n,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)) {
+	vec1 <- 0
+	for(i in 1:n) {
+	  a <- Simulacion_dado_seiscaras(prob=prob)
+	  b <- Simulacion_dado_seiscaras(prob=prob)
+	  x <- a + b
+		vec1[i] <- x
+	}
+	vec1
+	table(vec1)/n
+}
+p_dado <- simulacion_lanzar_2_dados(1000);p_dado
+```
+Despues de varias simulaciones el numero 7 termino siendo siempre el de mayor frecuencia.
+
+### d)
+```{r}
+simulacion_lanzar_dado(39000, prob = c(2/9,1/9,2/9,1/9,2/9,1/9))
+```
+# Bloque 2
+
+## Ejercicio 4
+
+### a)
+```{r}
+probabilidad_a <- dbinom(3, size = 10, prob = 0.3);probabilidad_a
+```
+
+### b)
+```{r}
+probabilidad_b <- 1 - pbinom(6, size = 10, prob = 0.3);probabilidad_b
+```
+### c)
+```{r}
+n_simulaciones <- 500
+resultados_simulados <- rbinom(n_simulaciones, size = 10, prob = 0.3)
+tabla_frecuencias <- table(resultados_simulados) / n_simulaciones
+barplot(tabla_frecuencias, main = "Distribución Binomial Simulada", xlab = "Número de Compras", ylab = "Probabilidad")
+
+```
+
+
+
