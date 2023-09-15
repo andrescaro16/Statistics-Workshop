@@ -87,7 +87,7 @@ probabilidad_a <- dbinom(3, size = 10, prob = 0.3);probabilidad_a
 
 ### b)
 ```{r}
-probabilidad_b <- 1 - pbinom(6, size = 10, prob = 0.3);probabilidad_b
+probabilidad_b <- sum(1 - pbinom(7:10, size = 10, prob = 0.3));probabilidad_b
 ```
 ### c)
 ```{r}
@@ -98,5 +98,108 @@ barplot(tabla_frecuencias, main = "Distribución Binomial Simulada", xlab = "Nú
 
 ```
 
+## Ejercicio 5
+
+### a)
+```{r}
 
 
+
+
+```
+
+### b) 
+
+```{r}
+
+
+lambda <- 2
+
+numeroTormentas <- 3
+
+probabilidad <- dpois(numeroTormentas, lambda)
+
+
+print(probabilidad)
+
+
+```
+
+### c)
+```{r}
+
+
+```
+
+## Ejercicio 6
+
+### a)
+```{r}
+
+```
+
+### b) 
+
+```{r}
+
+```
+
+### c)
+```{r}
+
+
+```
+
+# Bloque 3
+
+## Ejercicio 7
+
+### a)
+```{r}
+
+```
+
+### b) 
+
+```{r}
+
+```
+
+### c)
+```{r}
+
+
+```
+
+## Ejercicio 8
+
+### a)
+```{r}
+
+```
+
+### b) 
+
+```{r}
+
+```
+
+### c)
+```{r}
+
+
+```
+
+## Ejercicio 9
+
+```{r}
+
+
+```
+
+## Ejercicio 10
+
+```{r}
+
+
+```
