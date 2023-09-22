@@ -4,92 +4,126 @@
 
 ### a)
 
+Función para lanzar una dado con probabilidad p de sacar "Sello":
+
 ```{r}
 lanzar_moneda <- function(p = 0.5) {
-  resultado <- ifelse(runif(1) < p, "Cara", "Cruz")
-  return(resultado)
+  resultado <- ifelse(p > runif(1), "Sello", "Cara")
 }
 resultado_lanzamiento <- lanzar_moneda(0.5);resultado_lanzamiento
 ```
 
 ### b)
 
+Función para tirar un dado n veces y retornar la tabla de frecuencia relativa:
+
 ```{r}
-simulacion_lanzar_moneda<- function(n ,p = 0.5) {
-	vec <- 0
-	for(i in 1:n) {
-		vec[i] <- lanzar_moneda(p)
-	}
-	vec
-	table(vec)/n
+simulacion_lanzar_moneda <- function (n = 1, p = 0.5) {
+  vec <- replicate(n, lanzar_moneda(p))
+  table(vec)/n
 }
 monedas <- simulacion_lanzar_moneda(1234);monedas
+
 ```
 
 ### c)
 
+Lanzar un dado 1234 veces con probabilidad del 73% de sacar "Cara":
+
 ```{r}
-monedas_cargadas <- simulacion_lanzar_moneda(1234,0.73);monedas_cargadas
+monedas_cargadas <- simulacion_lanzar_moneda(1234, (1-0.73));monedas_cargadas
 ```
 
 ## Ejercicio 2
 
 ### a)
 
-X es el espacio muestral X = {1,2,3,4,5,6}\
-P es la probabilidad de cada uno P = {1/6,1/6,1/6,1/6,1/6.1/6}
+<< Insert Picture meco siuuuuuu >>
+
+### b)
+
+Función que lanza un dado de seis caras n veces y luego comprobamos la probabilidad de cada cara con la tabla de frecuencia relativa:
+
+```{r}
+lanzar_dado <- function(n=1,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)){
+  resultado_dado <- sample(1:6, n, prob=prob, replace=TRUE)
+}
+n <- 10000
+dado_test <- lanzar_dado(n);
+table(dado_test)/n
+```
+
+### c)
+
+<< Insert Picture meco siuuuuuu >>
+
+Lanzar dos dados mil(1000) veces:
+
+```{r}
+n_lanzamientos = 1000
+dado_1 = lanzar_dado(n_lanzamientos)
+dado_2 = lanzar_dado(n_lanzamientos)
+
+resultado = dado_1 + dado_2
+
+table(resultado)/n_lanzamientos
+```
+
+> **Después de varias simulaciones el número 7 terminó siendo siempre el de mayor frecuencia y es acorde a las probabilidades antes mencionadas.**
+
+### d)
+
+```{r}
+n_lanzamientos <- 39000
+dado_cargado <- lanzar_dado(n_lanzamientos, prob = c(2/9,1/9,2/9,1/9,2/9,1/9))
+table(dado_cargado)/n_lanzamientos
+```
+>***Como se puede ver en la tabla de frecuencia relativa, efectivamente los números impares tiene el doble de probabilidades de salir que los números pares.***
+
+## Ejercicio 3
+### a)
+
+<< Insertar Picture meco siuuuu >>
 
 ### b)
 ```{r}
-Simulacion_dado_seiscaras <- function(n=1,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)){
-  resultado_dado <- sample(1:6, n,prob=prob)
-}
-simulacion_lanzar_dado<- function(n,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)) {
-	vec1 <- 0
-	for(i in 1:n) {
-		vec1[i] <- Simulacion_dado_seiscaras(prob=prob)
-	}
-	vec1
-	table(vec1)/n
-}
-p_dado <- simulacion_lanzar_dado(1000);p_dado
+total_dispositivos <- 1000
+
+dispositivo <- sample(c("defectuoso", "no_defectuoso"), total_dispositivos, replace = TRUE, prob = c(0.10, 0.9))
+  
+print(table(dispositivo)/total_dispositivos)
+
 ```
 
 ### c)
 ```{r}
-simulacion_lanzar_2_dados<- function(n,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)) {
-	vec1 <- 0
-	for(i in 1:n) {
-	  a <- Simulacion_dado_seiscaras(prob=prob)
-	  b <- Simulacion_dado_seiscaras(prob=prob)
-	  x <- a + b
-		vec1[i] <- x
-	}
-	vec1
-	table(vec1)/n
-}
-p_dado <- simulacion_lanzar_2_dados(1000);p_dado
-```
-Despues de varias simulaciones el numero 7 termino siendo siempre el de mayor frecuencia.
+testCalidad <- rep(0, total_dispositivos)
+  
+testCalidad[dispositivo == "defectuoso"] <- sample(c("identificado", "no_identificado"), sum(dispositivo == "defectuoso"), replace = TRUE, prob = c(0.8, 0.2) )
+  
+testCalidad[dispositivo == "no_defectuoso"] <- sample(c("identificado","no_identificado"), sum(dispositivo == "no_defectuoso"), replace = TRUE, prob = c(0.05, 0.95) )
 
-### d)
-```{r}
-simulacion_lanzar_dado(39000, prob = c(2/9,1/9,2/9,1/9,2/9,1/9))
+prop.table(table(dispositivo, testCalidad), 1)
 ```
+
 # Bloque 2
 
 ## Ejercicio 4
 
 ### a)
+
 ```{r}
 probabilidad_a <- dbinom(3, size = 10, prob = 0.3);probabilidad_a
 ```
 
 ### b)
+
 ```{r}
 probabilidad_b <- sum(1 - pbinom(7:10, size = 10, prob = 0.3));probabilidad_b
 ```
+
 ### c)
+
 ```{r}
 n_simulaciones <- 500
 resultados_simulados <- rbinom(n_simulaciones, size = 10, prob = 0.3)
@@ -101,14 +135,12 @@ barplot(tabla_frecuencias, main = "Distribución Binomial Simulada", xlab = "Nú
 ## Ejercicio 5
 
 ### a)
+
 ```{r}
-
-
-
 
 ```
 
-### b) 
+### b)
 
 ```{r}
 
@@ -126,6 +158,7 @@ print(probabilidad)
 ```
 
 ### c)
+
 ```{r}
 
 
@@ -134,17 +167,19 @@ print(probabilidad)
 ## Ejercicio 6
 
 ### a)
+
 ```{r}
 
 ```
 
-### b) 
+### b)
 
 ```{r}
 
 ```
 
 ### c)
+
 ```{r}
 
 
@@ -155,17 +190,19 @@ print(probabilidad)
 ## Ejercicio 7
 
 ### a)
+
 ```{r}
 
 ```
 
-### b) 
+### b)
 
 ```{r}
 
 ```
 
 ### c)
+
 ```{r}
 
 
@@ -174,17 +211,19 @@ print(probabilidad)
 ## Ejercicio 8
 
 ### a)
+
 ```{r}
 
 ```
 
-### b) 
+### b)
 
 ```{r}
 
 ```
 
 ### c)
+
 ```{r}
 
 
@@ -203,3 +242,4 @@ print(probabilidad)
 
 
 ```
+
