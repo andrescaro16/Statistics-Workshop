@@ -8,7 +8,7 @@ Función para lanzar una dado con probabilidad p de sacar "Sello":
 
 ```{r}
 lanzar_moneda <- function(p = 0.5) {
-resultado <- ifelse(p > runif(1), "Sello", "Cara")
+  resultado <- ifelse(p > runif(1), "Sello", "Cara")
 }
 resultado_lanzamiento <- lanzar_moneda(0.5);resultado_lanzamiento
 ```
@@ -19,8 +19,8 @@ Función para tirar un dado n veces y retornar la tabla de frecuencia relativa:
 
 ```{r}
 simulacion_lanzar_moneda <- function (n = 1, p = 0.5) {
-vec <- replicate(n, lanzar_moneda(p))
-table(vec)/n
+  vec <- replicate(n, lanzar_moneda(p))
+  table(vec)/n
 }
 monedas <- simulacion_lanzar_moneda(1234);monedas
 
@@ -46,7 +46,7 @@ Función que lanza un dado de seis caras n veces y luego comprobamos la probabil
 
 ```{r}
 lanzar_dado <- function(n=1,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)){
-resultado_dado <- sample(1:6, n, prob=prob, replace=TRUE)
+  resultado_dado <- sample(1:6, n, prob=prob, replace=TRUE)
 }
 n <- 10000
 dado_test <- lanzar_dado(n);
@@ -180,20 +180,45 @@ prob_mas_de_4_tormentas <- 1 - ppois(4, lambda = 2);prob_mas_de_4_tormentas
 ### a)
 
 ```{r}
+medias <- numeric(5000)
 
+for (i in 1:5000) {
+  lanzamientos <- lanzar_dado(5)
+  media_lanzamientos <- mean(lanzamientos)
+  medias[i] <- media_lanzamientos
+}
+
+print(medias)
 ```
 
 ### b)
 
 ```{r}
-
+hist(medias, main = "Histograma de Medias de Lanzar 5 Dados",
+     xlab = "Media de Lanzamientos", ylab = "Frecuencia")
 ```
 
 ### c)
 
 ```{r}
+print("Media:")
+media <- mean(medias);media
+print("Varianza:")
+varianza <- var(medias);varianza
 
+hist(medias, main = "Histograma de Medias de Lanzar 5 Dados",
+     xlab = "Media de Lanzamientos", ylab = "Frecuencia")
 
+# Línea vertical en la media
+abline(v = media, col = "red")
+
+# Calcular las líneas verticales para la desviación estándar
+desviacion_estandar <- sqrt(varianza)
+linea_izquierda <- media - desviacion_estandar
+linea_derecha <- media + desviacion_estandar
+
+# Agrega líneas de desviaciones a la gráfica
+abline(v = c(linea_izquierda, linea_derecha), col = "blue")
 ```
 
 # Bloque 3
