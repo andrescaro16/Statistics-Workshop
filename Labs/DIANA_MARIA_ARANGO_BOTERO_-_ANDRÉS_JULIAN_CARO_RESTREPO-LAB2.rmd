@@ -201,10 +201,10 @@ hist(medias, main = "Histograma de Medias de Lanzar 5 Dados",
 ### c)
 
 ```{r}
-print("Media:")
-media <- mean(medias);media
-print("Varianza:")
-varianza <- var(medias);varianza
+media <- mean(medias)
+varianza <- var(medias)
+print(paste("Media:", media))
+print(paste("Varianza:", varianza))
 
 hist(medias, main = "Histograma de Medias de Lanzar 5 Dados",
      xlab = "Media de Lanzamientos", ylab = "Frecuencia")
@@ -228,20 +228,26 @@ abline(v = c(linea_izquierda, linea_derecha), col = "blue")
 ### a)
 
 ```{r}
-
+# Generación de 1000 lanzamientos simulados de dardos
+posiciones_aterrizaje <- runif(1000);posiciones_aterrizaje
 ```
 
 ### b)
 
 ```{r}
+# Calcular la frecuencia relativa de dardos en la zona central
+frecuencia_centro <- length(posiciones_aterrizaje[posiciones_aterrizaje >= 0.2 & posiciones_aterrizaje <= 0.4]) / 1000
 
+print(paste("Frecuencia relativa en la zona central:", frecuencia_centro))
 ```
 
 ### c)
 
 ```{r}
+# Calcular la frecuencia relativa de dardos en el borde exterior
+frecuencia_borde_exterior <- length(posiciones_aterrizaje[posiciones_aterrizaje >= 0.8 & posiciones_aterrizaje <= 1]) / 1000
 
-
+print(paste("Frecuencia relativa en el borde exterior:", frecuencia_borde_exterior))
 ```
 
 ## Ejercicio 8
@@ -249,20 +255,34 @@ abline(v = c(linea_izquierda, linea_derecha), col = "blue")
 ### a)
 
 ```{r}
+# Parámetros
+tiempo_presupuestado <- 25
+media <- 30
+desviacion_estandar <- 5
 
+# Calcular la probabilidad de que el tiempo exceda los 25 minutos
+prob_exceder <- 1 - pnorm(tiempo_presupuestado, media, desviacion_estandar, lower.tail = TRUE)
+
+print(paste("Probabilidad de exceder los 25 minutos:", prob_exceder))
 ```
 
 ### b)
 
 ```{r}
+tiempo_necesario <- qnorm(1 - 0.1, media, desviacion_estandar)
 
+print(paste("Tiempo necesario para probabilidad de 0.1:", tiempo_necesario))
 ```
 
 ### c)
 
 ```{r}
+limite_inferior <- 28
+limite_superior <- 32
 
+prob_entre_tiempos <- pnorm(limite_superior, media, desviacion_estandar) - pnorm(limite_inferior, media, desviacion_estandar)
 
+print(paste("Probabilidad de tiempo entre 28 y 32 minutos:", prob_entre_tiempos))
 ```
 
 ## Ejercicio 9
