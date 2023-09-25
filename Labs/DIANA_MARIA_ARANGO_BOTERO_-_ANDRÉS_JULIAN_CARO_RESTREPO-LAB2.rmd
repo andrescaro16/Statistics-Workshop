@@ -288,13 +288,31 @@ print(paste("Probabilidad de tiempo entre 28 y 32 minutos:", prob_entre_tiempos)
 ## Ejercicio 9
 
 ```{r}
+# Valor fijo de la media
+media <- 10
 
+# Valores de desviación estándar a considerar
+desviaciones_estandar <- c(1, 2, 3, 4)
 
+# Crea una nueva ventana de gráficos -> Profe, que difícil fue encontrar esto jaja
+par(mfrow = c(2, 2))
+
+# Graficar la función de densidad de probabilidad normal para cada desviación estándar
+for (desviacion_estandar in desviaciones_estandar) {
+  x <- seq(0, 20, by = 0.001)
+  y <- dnorm(x, media, desviacion_estandar)
+  plot(x, y, type = "l", main = paste("Desviación Estándar =", desviacion_estandar), xlab = "Valor", ylab = "Densidad")
+}
 ```
 
 ## Ejercicio 10
 
 ```{r}
+lambda <- 0.05
+tiempo_deseado <- 15
 
-
+# Usando la función de supervivencia de la distribución exponencial tenemos que:
+# S(t) = 1 − F(t)
+# S(15) = 1 − F(15) = 1 − (1−e^(−0.05⋅15))
+probabilidad <- 1 - (1 - exp(-lambda * tiempo_deseado));probabilidad
 ```
