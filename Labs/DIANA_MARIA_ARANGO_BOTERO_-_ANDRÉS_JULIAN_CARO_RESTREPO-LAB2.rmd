@@ -81,7 +81,7 @@ table(dado_cargado)/n_lanzamientos
 
 > ***Como se puede ver en la tabla de frecuencia relativa, efectivamente los números impares tiene el doble de probabilidades de salir que los números pares.***
 
-## Ejercicio 3
+##  Ejercicio 3
 
 ### a)
 
@@ -152,39 +152,30 @@ legend("topright", legend = c("Simulada", "Teórica"),
        col = c("black", "red"), lwd = c(1, 2), lty = c(1, 2))
 ```
 
-## Ejercicio 5
+##  Ejercicio 5
 
 ### a)
 
 ```{r}
-
+# Simulación de 1000 semanas
+simulacion <- rpois(1000, 2);simulacion
 ```
 
 ### b)
 
 ```{r}
-
-
-lambda <- 2
-
-numeroTormentas <- 3
-
-probabilidad <- dpois(numeroTormentas, lambda)
-
-
-print(probabilidad)
-
-
+# Probabilidad de exactamente 3 tormentas eléctricas
+prob_3_tormentas <- dpois(3, lambda = 2);prob_3_tormentas
 ```
 
 ### c)
 
 ```{r}
-
-
+# Probabilidad de más de 4 tormentas eléctricas
+prob_mas_de_4_tormentas <- 1 - ppois(4, lambda = 2);prob_mas_de_4_tormentas
 ```
 
-## Ejercicio 6
+##  Ejercicio 6
 
 ### a)
 
