@@ -15,15 +15,16 @@ resultado_lanzamiento <- lanzar_moneda(0.5);resultado_lanzamiento
 
 ### b)
 
-Función para tirar un dado n veces y retornar la tabla de frecuencia relativa:
+Función para tirar un dado n veces, retornar la tabla de frecuencia relativa y devolver el error cada vez que se ejecuta:
 
 ```{r}
 simulacion_lanzar_moneda <- function (n = 1, p = 0.5) {
   vec <- replicate(n, lanzar_moneda(p))
   table(vec)/n
 }
+p <- 0.5
 monedas <- simulacion_lanzar_moneda(1234);monedas
-
+error_monedas <- abs(p - monedas);error_monedas
 ```
 
 ### c)
@@ -42,15 +43,17 @@ monedas_cargadas <- simulacion_lanzar_moneda(1234, (1-0.73));monedas_cargadas
 
 ### b)
 
-Función que lanza un dado de seis caras n veces y luego comprobamos la probabilidad de cada cara con la tabla de frecuencia relativa:
+Función que lanza un dado de seis caras n veces, luego comprobamos la probabilidad de cada cara con la tabla de frecuencia relativa y calculamos el error de la probabilidad teorica:
 
 ```{r}
 lanzar_dado <- function(n=1,prob = c(1/6,1/6,1/6,1/6,1/6,1/6)){
   resultado_dado <- sample(1:6, n, prob=prob, replace=TRUE)
 }
 n <- 10000
+p <- 1/6
 dado_test <- lanzar_dado(n);
-table(dado_test)/n
+dado_testT <- table(dado_test)/n;dado_testT
+error_dado <- abs(p - dado_testT);error_dado
 ```
 
 ### c)
@@ -81,7 +84,7 @@ table(dado_cargado)/n_lanzamientos
 
 > ***Como se puede ver en la tabla de frecuencia relativa, efectivamente los números impares tiene el doble de probabilidades de salir que los números pares.***
 
-##  Ejercicio 3
+## Ejercicio 3
 
 ### a)
 
@@ -143,7 +146,7 @@ tabla_frecuencias <- table(resultados_simulados) / n_simulaciones;tabla_frecuenc
 
 # Calculo de distribución binomial teórica
 y_teorico <- dbinom(0:10, size = 10, prob = 0.3)
-
+x <- 0:10
 # Gráfico y comparación
 plot(tabla_frecuencias, type = "l", col = "black", lwd = 2,
      main = "Distribución Binomial Simulada", xlab = "Número de Compras", ylab = "Probabilidad")
@@ -152,7 +155,7 @@ legend("topright", legend = c("Simulada", "Teórica"),
        col = c("black", "red"), lwd = c(1, 2), lty = c(1, 2))
 ```
 
-##  Ejercicio 5
+## Ejercicio 5
 
 ### a)
 
@@ -175,7 +178,7 @@ prob_3_tormentas <- dpois(3, lambda = 2);prob_3_tormentas
 prob_mas_de_4_tormentas <- 1 - ppois(4, lambda = 2);prob_mas_de_4_tormentas
 ```
 
-##  Ejercicio 6
+## Ejercicio 6
 
 ### a)
 
@@ -227,15 +230,19 @@ abline(v = c(linea_izquierda, linea_derecha), col = "blue")
 
 ### a)
 
+Generación de 1000 lanzamientos simulados de dardos:
+
 ```{r}
-# Generación de 1000 lanzamientos simulados de dardos
+
 posiciones_aterrizaje <- runif(1000);posiciones_aterrizaje
 ```
 
 ### b)
 
+Calcular la frecuencia relativa de dardos en la zona central:
+
 ```{r}
-# Calcular la frecuencia relativa de dardos en la zona central
+
 frecuencia_centro <- length(posiciones_aterrizaje[posiciones_aterrizaje >= 0.2 & posiciones_aterrizaje <= 0.4]) / 1000
 
 print(paste("Frecuencia relativa en la zona central:", frecuencia_centro))
@@ -243,8 +250,10 @@ print(paste("Frecuencia relativa en la zona central:", frecuencia_centro))
 
 ### c)
 
+Calcular la frecuencia relativa de dardos en el borde exterior:
+
 ```{r}
-# Calcular la frecuencia relativa de dardos en el borde exterior
+
 frecuencia_borde_exterior <- length(posiciones_aterrizaje[posiciones_aterrizaje >= 0.8 & posiciones_aterrizaje <= 1]) / 1000
 
 print(paste("Frecuencia relativa en el borde exterior:", frecuencia_borde_exterior))
@@ -314,5 +323,6 @@ tiempo_deseado <- 15
 # Usando la función de supervivencia de la distribución exponencial tenemos que:
 # S(t) = 1 − F(t)
 # S(15) = 1 − F(15) = 1 − (1−e^(−0.05⋅15))
-probabilidad <- 1 - (1 - exp(-lambda * tiempo_deseado));probabilidad
+probabilidad <- 1 - (1 - exp(-lambda * tiempo_deseado))
+print(paste("Probabilidad de que una bombilla dure al menos 15 años es:", probabilidad))
 ```
