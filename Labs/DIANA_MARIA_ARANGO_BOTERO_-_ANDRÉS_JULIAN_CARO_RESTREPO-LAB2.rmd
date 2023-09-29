@@ -314,6 +314,12 @@ for (desviacion_estandar in desviaciones_estandar) {
 }
 ```
 
+-   La desviación estándar permite evaluar la variabilidad en los datos.
+-   Ayuda a tomar decisiones informadas, como gestionar el riesgo financiero o controlar la calidad en la producción.
+-   La elección depende del contexto, desde inversiones hasta políticas públicas y procesos industriales.
+
+En este ejemplo del laboratorio podemos ver como al aumentar la desviación estandar, las probabilidades varian más y hay más diferencia entre ellas. Por lo que tendremos mayor riego de incertidumbre a la hora de realizar el proceso experimental.
+
 ## Ejercicio 10
 
 ```{r}
