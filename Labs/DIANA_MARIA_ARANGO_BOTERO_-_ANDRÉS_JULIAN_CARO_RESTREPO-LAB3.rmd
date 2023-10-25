@@ -1,0 +1,19 @@
+---
+title: "DIANA_MARIA_ARANGO_BOTERO_-_ANDRÉS_JULIAN_CARO_RESTREPO"
+authors: Andres Julian Caro Restrepo, Juan Esteban Avendaño Castaño, Julian Andrés
+  Romero Hinestroza, Andrés Prada Rodríguez
+date: "2023-09-29"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Bloque 1
+
+## Problema 1
+
+## a)
+
+## b)
+
+## c)
