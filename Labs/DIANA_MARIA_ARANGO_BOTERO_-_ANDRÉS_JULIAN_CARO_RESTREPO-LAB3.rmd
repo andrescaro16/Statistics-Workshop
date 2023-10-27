@@ -2,7 +2,7 @@
 title: "DIANA_MARIA_ARANGO_BOTERO_-_ANDRÉS_JULIAN_CARO_RESTREPO"
 authors: Andres Julian Caro Restrepo, Juan Esteban Avendaño Castaño, Julian Andrés
   Romero Hinestroza, Andrés Prada Rodríguez
-date: "2023-09-29"
+date: "2023-10-27"
 output:
   html_document: default
   pdf_document: default
@@ -26,10 +26,14 @@ sd_area <- sd(area);sd_area
 sd_precio <- sd(precio);sd_precio
 ```
 
+```{r}
+ventacasas <- read.csv("../Databases/ventacasas.csv")
+
+```
+
 ## b)
 
 ## c)
-
 
 ## Problema 2
 
@@ -37,9 +41,7 @@ sd_precio <- sd(precio);sd_precio
 
 ## b)
 
-
 ## Problema 3
-
 
 # Bloque 2
 
@@ -75,7 +77,7 @@ confidence_interval <- function(mean = 0, sd = 1, n, confidence_level = .95) {
 }
 
 intervalo_95 <- confidence_interval(promedio_muestra, desviacion_estandar_muestra, n_muestra)
-intervalo_95 <- confidence_interval(promedio_muestra, desviacion_estandar_muestra, n_muestra, confianza_99)
+intervalo_99 <- confidence_interval(promedio_muestra, desviacion_estandar_muestra, n_muestra, confianza_99)
 
 cat("Promedio de la población:", promedio_poblacion, "\n")
 cat("Varianza de la población:", varianza_poblacion, "\n")
@@ -97,7 +99,6 @@ data <- mtcars
 
 # 1. Resumen y descripción de los atributos
 summary(data)
-str(data)
 
 # 2. Visualizar la distribución de la variable mpg con un histograma
 length(data$mpg)
@@ -128,17 +129,135 @@ cat("Intervalo de confianza del 95% para la media de mpg:", intervalo_confianza,
 
 ## Problema 6
 
-
 # Bloque 3
 
 ## Problema 7
 
+```{r}
+# Datos
+X_bar <- 9900    # Media muestral
+mu <- 10000      # Media afirmada por el fabricante en la hipótesis nula
+S <- 120         # Desviación estándar de la población
+n <- 30          # Tamaño de la muestra
+alpha <- 0.05    # Nivel de significancia
+
+# Calculamos el estadístico de prueba Z
+Z <- (X_bar - mu) / (S / sqrt(n))
+
+# Calculamos el valor crítico Z_crit para un nivel de significancia de 0.05
+Z_crit <- qnorm(alpha)
+
+# Calculamos el p-valor de la prueba
+p_value <- 1 - pnorm(Z)
+
+# Mostramos los resultados
+cat("Estadístico de prueba:", round(Z, 2), "\n")
+cat("Valor crítico:", round(Z_crit, 2), "\n")
+cat("p-valor de la prueba:", round(p_value, 2), "\n")
+
+# Comprobamos si rechazamos la hipótesis nula
+if (Z < Z_crit) {
+  cat("Con un nivel de significancia de", alpha, "rechazamos la hipótesis nula.\n")
+  cat("Hay evidencia para sugerir que la afirmación del fabricante es falsa.\n")
+} else {
+  cat("Con un nivel de significancia de", alpha, "no rechazamos la hipótesis nula.\n")
+  cat("No hay suficiente evidencia para sugerir que la afirmación del fabricante es falsa.\n")
+}
+```
 
 ## Problema 8
 
+```{r}
+# Datos
+media_muestra <- 2.1        # Media muestral
+desviacion_muestra <- 0.3   # Desviación estándar de la muestra
+n <- 35                     # Tamaño de la muestra
+mu <- 2                     # Media afirmada por la etiqueta
+gl <- n - 1                 # Grados de libertad
+alpha <- 0.05               # Nivel de significancia
+
+# Calculamos el estadístico de prueba t
+t <- (media_muestra - mu) / (desviacion_muestra / sqrt(n))
+
+# Calculamos el valor crítico t_crit para un nivel de significancia de 0.05
+t_crit <- qt(alpha, df = gl, lower.tail = TRUE)
+
+# Calculamos el p-valor de la prueba
+p_value <- pt(t, df = gl, lower.tail = TRUE)
+
+# Mostramos los resultados
+cat("Estadístico de prueba:", round(t, 2), "\n")
+cat("Valor crítico:", round(t_crit, 2), "\n")
+cat("p-valor de la prueba:", format(p_value, scientific = TRUE, digits = 2), "\n")
+
+# Comprobamos si rechazamos la hipótesis nula
+if (t < t_crit) {
+  cat("Con un nivel de significancia de", alpha, "rechazamos la hipótesis nula.\n")
+  cat("Hay evidencia para sugerir que la afirmación en la etiqueta de las galletas es falsa.\n")
+} else {
+  cat("Con un nivel de significancia de", alpha, "no rechazamos la hipótesis nula.\n")
+  cat("No hay suficiente evidencia para sugerir que la afirmación en la etiqueta de las galletas es falsa.\n")
+}
+```
 
 ## Problema 9
 
+```{r}
+# Nivel de confianza del 95% y error máximo de 0.06
+confianza <- 0.95
+error_maximo <- 0.06
+
+# Valor crítico Z para el nivel de confianza
+Z <- qnorm(1 - (1 - confianza) / 2)
+
+# Tamaño de muestra para una proporción desconocida
+proporcion_desconocida <- 0.5
+tamanio_muestra_desconocida <- (Z^2) * proporcion_desconocida * (1 - proporcion_desconocida) / (error_maximo^2)
+
+# Tamaño de muestra para una proporción de al menos 0.8
+proporcion_minima <- 0.8
+tamanio_muestra_minima <- (Z^2) * proporcion_minima * (1 - proporcion_minima) / (error_maximo^2)
+
+cat("Tamaño de muestra para proporción desconocida:", round(tamanio_muestra_desconocida), "\n")
+cat("Tamaño de muestra para proporción de al menos 0.8:", round(tamanio_muestra_minima), "\n")
+```
 
 ## Problema 10
 
+```{r}
+# Datos del problema
+proporcion_afirmada <- 0.06   # Proporción afirmada por la aerolínea
+n <- 200                      # Tamaño de la muestra
+muestras_no_encontradas <- 17 # Número de muestras no encontradas
+nivel_significancia <- 0.05   # Nivel de significancia
+
+# Calculamos la proporción muestral
+proporcion_muestral <- muestras_no_encontradas / n
+
+# Hipótesis nula y alternativa
+# H0: p = 0.06 (proporción afirmada por la aerolínea)
+# H1: p > 0.06 (proporción mayor a la afirmada por la aerolínea)
+
+# Calculamos el estadístico de prueba Z
+Z <- (proporcion_muestral - proporcion_afirmada) / sqrt((proporcion_afirmada * (1 - proporcion_afirmada)) / n)
+
+# Calculamos el valor crítico Z para un nivel de significancia de 0.05
+Z_critico <- qnorm(1 - nivel_significancia)
+
+# Calculamos el p-valor
+p_valor <- 1 - pnorm(Z)
+
+# Mostramos los resultados
+cat("Estadístico de prueba Z:", round(Z, 2), "\n")
+cat("Valor crítico Z:", round(Z_critico, 2), "\n")
+cat("p-valor:", round(p_valor, 4), "\n")
+
+# Comprobamos si rechazamos la hipótesis nula
+if (Z > Z_critico) {
+  cat("Con un nivel de significancia de", nivel_significancia, "rechazamos la hipótesis nula.\n")
+  cat("Hay suficiente evidencia para sugerir que la proporción real es mayor que 0.06.\n")
+} else {
+  cat("Con un nivel de significancia de", nivel_significancia, "no rechazamos la hipótesis nula.\n")
+  cat("No hay suficiente evidencia para sugerir que la proporción real es mayor que 0.06.\n")
+}
+```
