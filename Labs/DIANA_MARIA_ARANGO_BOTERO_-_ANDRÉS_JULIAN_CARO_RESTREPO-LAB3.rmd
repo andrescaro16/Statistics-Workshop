@@ -12,7 +12,19 @@ output:
 
 ## Problema 1
 
+Primero importamos la base de datos:
+```{r}
+ventacasas <- read.csv("../Databases/ventacasas.csv")
+```
 ## a)
+```{r}
+area <- ventacasas$Area
+area_mean <- sum(area)/length(area);area_mean
+precio <- ventacasas$Precio
+precio_mean <- sum(precio)/length(precio);precio_mean
+sd_area <- sd(area);sd_area
+sd_precio <- sd(precio);sd_precio
+```
 
 ## b)
 
@@ -32,10 +44,87 @@ output:
 # Bloque 2
 
 ## Problema 4
+```{r}
+n_simulaciones <- 500000
+lambda <- 20
+simulaciones <- rpois(n_simulaciones, lambda)
 
+# Calcular el promedio y la varianza de la población completa
+promedio_poblacion <- mean(simulaciones)
+varianza_poblacion <- var(simulaciones)
+
+# Seleccionar una muestra aleatoria de n = 1000
+n_muestra <- 1000
+muestra <- sample(simulaciones, n_muestra, replace = FALSE)
+
+# Calcular el promedio y la desviación estándar de la muestra
+promedio_muestra <- mean(muestra)
+desviacion_estandar_muestra <- sd(muestra)
+
+# Calcular los intervalos de confianza del 95% y 99% para μ
+confianza_95 <- 0.95
+confianza_99 <- 0.99
+
+confidence_interval <- function(mean = 0, sd = 1, n, confidence_level = .95) {
+  alpha = 1 - confidence_level
+  z_alpha2 = qnorm(alpha/2, lower.tail = FALSE)
+  # print(z_alpha2)
+  standard_error = sd/sqrt(n)
+  # (lim_inf, lim_sup)
+  c(mean - (z_alpha2 * standard_error), mean + (z_alpha2 * standard_error) )
+}
+
+intervalo_95 <- confidence_interval(promedio_muestra, desviacion_estandar_muestra, n_muestra)
+intervalo_95 <- confidence_interval(promedio_muestra, desviacion_estandar_muestra, n_muestra, confianza_99)
+
+cat("Promedio de la población:", promedio_poblacion, "\n")
+cat("Varianza de la población:", varianza_poblacion, "\n")
+cat("Promedio de la muestra:", promedio_muestra, "\n")
+cat("Desviación estándar de la muestra:", desviacion_estandar_muestra, "\n")
+cat("Intervalo de confianza del 95% para μ:", "(", intervalo_95[1], ",", intervalo_95[2],"\n")
+cat("Intervalo de confianza del 99% para μ:", "(", intervalo_99[1], ",", intervalo_99[2],"\n")
+```
+Estos intervalos proporcionan un rango estimado en el que se espera que se encuentre el valor real de μ con un cierto nivel
+de confianza. Cuanto mayor sea el nivel de confianza de que μ esté en el intervalo, más amplio será este. Por lo tanto, en
+este caso, se puede decir, por ejemplo, que se está un 95% seguro de que la media se encuentra en ese intervalo, para el
+primer intervalo calculado.
 
 ## Problema 5
 
+```{r}
+# Cargar el conjunto de datos mtcars
+data <- mtcars
+
+# 1. Resumen y descripción de los atributos
+summary(data)
+str(data)
+
+# 2. Visualizar la distribución de la variable mpg con un histograma
+length(data$mpg)
+hist(data$mpg, breaks = 16 ,main="Distribución de mpg en mtcars", xlab="mpg")
+hist(data$mpg ,main="Distribución de mpg en mtcars", xlab="mpg")
+
+# Concluir sobre la distribución de mpg
+# Puedes observar la forma de la distribución y si parece ser normal o no. 
+# También puedes notar la tendencia central y cualquier posible sesgo en los datos.
+
+# 3. Calcular el intervalo de confianza del 95% para la media de mpg
+confianza <- 0.95
+n_muestras <- length(data$mpg)
+media_mpg <- mean(data$mpg)
+desviacion_estandar_mpg <- sd(data$mpg)
+error_estandar <- desviacion_estandar_mpg / sqrt(n_muestras)
+t_valor <- qt((1 - confianza) / 2, df = n_muestras - 1)
+margen_error <- t_valor * error_estandar
+
+intervalo_confianza <- c(media_mpg - margen_error, media_mpg + margen_error)
+
+cat("Intervalo de confianza del 95% para la media de mpg:", intervalo_confianza, "\n")
+
+# Concluir sobre el intervalo de confianza
+# El intervalo de confianza proporciona un rango estimado en el que se espera que esté la verdadera media de mpg con un 95% de confianza. Puedes utilizar este intervalo para hacer afirmaciones sobre la media de mpg en la población.
+
+```
 
 ## Problema 6
 
