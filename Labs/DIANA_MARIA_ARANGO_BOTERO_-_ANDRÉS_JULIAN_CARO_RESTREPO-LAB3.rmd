@@ -18,8 +18,8 @@ Primero importamos la base de datos:
 ventacasas <- read.csv("../Databases/ventacasas.csv")
 ```
 
+### a)
 
-## a)
 ```{r}
 
 precio_promedio <- mean(ventacasas$Precio)
@@ -43,7 +43,7 @@ hist(ventacasas$Precio, main = "Histograma de Precio", xlab = "Precio")
 hist(ventacasas$Area, main = "Histograma de Área", xlab = "Área")
 ```
 
-## b)
+### b)
 
 ```{r}
 tamanos_muestra <- c(10, 50, 100, 1500, 2000)
@@ -64,9 +64,10 @@ for (n in tamanos_muestra) {
 ```
 
 #### Analisis:
+
 A medida que se utilizan más datos en las muestras, se nota que la precisión de la media se acerca cada vez más a la obtenida en el punto a. Es evidente que las muestras con 1500 y 2000 datos son las más precisas.
 
-## c)
+### c)
 
 ```{r}
 
@@ -89,13 +90,15 @@ hist(medias_100, main = "Histograma (n = 100)", xlab = "Media del Área")
     
 
 ```
-#### Analisis:
-Gracias al gráfico y la distribución que se observa, se puede ver cómo el tamaño de la muestra afecta la precisión de las estimaciones. Al ser una gran cantidad de muestras, el resultado se asemeja mucho al resultado que se esperaria teoricamente
 
+#### Analisis:
+
+Gracias al gráfico y la distribución que se observa, se puede ver cómo el tamaño de la muestra afecta la precisión de las estimaciones. Al ser una gran cantidad de muestras, el resultado se asemeja mucho al resultado que se esperaria teoricamente
 
 ## Problema 2
 
-## a)
+### a)
+
 ```{r}
 #Muestras de 10, 50, 100, 1500 y 2000
 
@@ -139,7 +142,7 @@ hist(medias_100, main = "Histograma (n = 100)", xlab = "Media del Precio")
 
 ```
 
-## b)
+### b)
 
 ```{r}
 
@@ -172,7 +175,8 @@ legend("topright", legend = c("Promedio de Precio", "Promedios Muestrales"),
 ```
 
 #### Analisis:
-Gracias a la grafica se puede apreciar la variabilidad en las medias muestrales y cómo se distribuyen en comparación con el promedio de la población. 
+
+Gracias a la grafica se puede apreciar la variabilidad en las medias muestrales y cómo se distribuyen en comparación con el promedio de la población.
 
 ## Problema 3
 
@@ -212,6 +216,7 @@ for (n in n_values) {
 ```
 
 #### Interpretación:
+
 Para ambas distribuciones (binomial y de Poisson), a medida que el tamaño de la muestra "n" aumenta, las gráficas de densidad de las medias de las muestras se vuelven más simétricas y se acercan a una distribución normal. Esto demuestra la aplicación del Teorema Central del Límite y cómo las distribuciones se comportan de manera más predecible y normal a medida que se trabaja con tamaños de muestra más grandes.
 
 # Bloque 2
@@ -318,8 +323,7 @@ media_mpg <- mean(data$mpg)
 sd <- sd(data$mpg)
 
 alpha <- 1 - confianza
-t_alpha2 <- qnorm(alpha / 2, lower.tail = FALSE)
-t_alpha2 <- qt(alpha / 2, n_muestra - 1)
+t_alpha2 <- qt(alpha / 2, n_muestra - 1, lower.tail = FALSE); t_alpha2
 
 standard_error <- sd / sqrt(n_muestra)
 # (lim_inf, lim_sup)
@@ -328,10 +332,11 @@ intervalo_confianza <- c(media_mpg - (t_alpha2 * standard_error), media_mpg + (t
 cat("Media muestral:", media_mpg, "\n")
 cat("Intervalo de confianza del 95% para la media de mpg:", "(", intervalo_confianza[1], ",", intervalo_confianza[2], ")", "\n")
 ```
-En base a esto, podemos concluir que con un 95% de seguridad, la media poblacional µ se encuentr = a
-en el intervalo (20.46463, 19.71662).
+
+En base a esto, podemos concluir que con un 95% de seguridad, la media poblacional µ se encuentr = a en el intervalo (19.71662 , 20.46463).
 
 ## Problema 6
+
 ```{r}
 nivel_confianza <- .99
 error_estimacion <- 0.25
@@ -353,12 +358,12 @@ cat("El tamaño de la muestra necesario debe ser de aproximadamente:", n , "\n")
 # Datos
 X_bar <- 9900    # Media muestral
 mu <- 10000      # Media afirmada por el fabricante en la hipótesis nula
-S <- 120         # Desviación estándar de la población
+sigma <- 120     # Desviación estándar de la población
 n <- 30          # Tamaño de la muestra
 alpha <- 0.05    # Nivel de significancia
 
 # Calculamos el estadístico de prueba Z
-Z <- (X_bar - mu) / (S / sqrt(n))
+Z <- (X_bar - mu) / (sigma / sqrt(n))
 
 # Calculamos el valor crítico Z_crit para un nivel de significancia de 0.05
 Z_crit <- qnorm(alpha)
@@ -424,7 +429,7 @@ confianza <- 0.95
 error_maximo <- 0.06
 
 # Valor crítico Z para el nivel de confianza
-Z <- qnorm(1 - (1 - confianza) / 2)
+Z <- qnorm((1 - confianza) / 2, lower.tail = FALSE)
 
 # Tamaño de muestra para una proporción desconocida
 proporcion_desconocida <- 0.5
