@@ -3,31 +3,205 @@ title: "DIANA_MARIA_ARANGO_BOTERO_-_ANDRÉS_JULIAN_CARO_RESTREPO"
 authors: Andres Julian Caro Restrepo, Juan Esteban Avendaño Castaño, Julian Andrés
   Romero Hinestroza, Andrés Prada Rodríguez
 date: "2023-09-29"
-output:
-  html_document: default
-  pdf_document: default
+output: html_notebook
 ---
 
 # Bloque 1
 
 ## Problema 1
 
+
 ## a)
+```{r}
+
+precio_promedio <- mean(ventacasas$Precio)
+print(precio_promedio)
+
+area_promedio <- mean(ventacasas$Area)
+print(area_promedio)
+
+desviacion_precio <- sd(ventacasas$Precio)
+print(desviacion_precio)
+
+desviacion_area <- sd(ventacasas$Area)
+print(desviacion_area)
+
+rango_precio <- max(ventacasas$Precio) - min(ventacasas$Precio);
+print(rango_precio)
+
+rango_area <- max(ventacasas$Area) - min(ventacasas$Area)
+print(rango_area)
+
+#resumen: 
+summary(ventacasas$Precio)
+summary(ventacasas$Area)
+
+hist(ventacasas$Precio, main = "Histograma de Precio", xlab = "Precio")
+hist(ventacasas$Area, main = "Histograma de Área", xlab = "Área")
+```
 
 ## b)
 
+```{r}
+tamanos_muestra <- c(10, 50, 100, 1500, 2000)
+
+medias <- numeric()
+
+for (n in tamanos_muestra) {
+  
+  muestra <- sample(ventacasas$Area, size = n)
+  
+  media_muestra <- mean(muestra)
+  cat("Tamaño de muestra:", n, "Media de la muestra:", media_muestra, "\n")
+  
+  medias <- c(medias, media_muestra)
+  
+  hist(muestra, main = paste("Histograma (n =", n, ")"), xlab = "Área")
+}
+```
+
 ## c)
+
+```{r}
+
+medias_10 <- numeric(5000)
+medias_50 <- numeric(5000)
+medias_100 <- numeric(5000)
+i <- 1 
+while(i <= 5000){
+  medias_10[i] <- mean(sample(ventacasas$Area, size = 10))
+  medias_50[i] <- mean(sample(ventacasas$Area, size = 50))
+  medias_100[i] <- mean(sample(ventacasas$Area, size = 100))
+  
+  
+  i <- i+1
+}
+
+hist(medias_10, main = "Histograma (n = 10)", xlab = "Media del Área")
+hist(medias_50, main = "Histograma (n = 50)", xlab = "Media del Área")
+hist(medias_100, main = "Histograma (n = 100)", xlab = "Media del Área")
+    
+
+```
 
 
 ## Problema 2
 
 ## a)
+```{r}
+#Muestras de 10, 50, 100, 1500 y 2000
+
+tamanos_muestra <- c(10, 50, 100, 1500, 2000)
+
+medias <- numeric()
+
+for (n in tamanos_muestra) {
+  
+  muestra <- sample(ventacasas$Precio, size = n)
+  
+  media_muestra <- mean(muestra)
+  cat("Tamaño de muestra:", n, "Media de la muestra:", media_muestra, "\n")
+  
+  medias <- c(medias, media_muestra)
+  
+  hist(muestra, main = paste("Histograma (n =", n, ")"), xlab = "Precio")
+}
+```
+
+```{r}
+#Medias de 5000 pruebas 
+
+medias_10 <- numeric(5000)
+medias_50 <- numeric(5000)
+medias_100 <- numeric(5000)
+i <- 1 
+while(i <= 5000){
+  medias_10[i] <- mean(sample(ventacasas$Precio, size = 10))
+  medias_50[i] <- mean(sample(ventacasas$Precio, size = 50))
+  medias_100[i] <- mean(sample(ventacasas$Precio, size = 100))
+  
+  
+  i <- i+1
+}
+
+hist(medias_10, main = "Histograma (n = 10)", xlab = "Media del Precio")
+hist(medias_50, main = "Histograma (n = 50)", xlab = "Media del Precio")
+hist(medias_100, main = "Histograma (n = 100)", xlab = "Media del Precio")
+     
+
+```
 
 ## b)
+
+```{r}
+
+# Con 50000 va a tardar mucho, usar 100 o 1000 en las pruebas
+n_simulations <- 50000
+sample_size <- 100
+
+# Generar 50,000 muestras y calcular los promedios en una sola línea
+Promedios_muestras <- replicate(n_simulations, mean(rnorm(sample_size, mean(ventacasas$Precio), sd(ventacasas$Precio))))
+
+# Histograma de los promedios muestrales
+hist(Promedios_muestras, 
+     main = "Histograma de Promedios Muestrales de Precio", 
+     xlab = "Promedio de Muestra",
+     col = "lightblue")
+
+mean_price <- mean(ventacasas$Precio)
+
+hist(Promedios_muestras, 
+     breaks = 15, 
+     freq = FALSE, 
+     main = "Distribución Acumulada de Promedios Muestrales",
+     xlab = "Promedio de Muestra")
+abline(v = mean_price, col = "red")
+
+legend("topright", legend = c("Promedio de Precio", "Promedios Muestrales"), 
+       col = c("red", "black"), lty = 1)
+
+
+```
 
 
 ## Problema 3
 
+```{r}
+library(ggplot2)
+n_values <- c(10, 50, 100, 200, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000)
+p <- 0.5
+lambda <- 0.5
+
+# Crear una gráfica comparativa para cada tamaño de muestra
+for (n in n_values) {
+  set.seed(123)  # Establecer una semilla para la reproducibilidad
+  
+  # Generar muestras de la distribución binomial
+  binomial_samples <- rbinom(1000, n, p)
+  
+  # Generar muestras de la distribución Poisson
+  poisson_samples <- rpois(1000, lambda * n)
+  
+  # Crear un data frame con los datos
+  data <- data.frame(
+    Value = c(binomial_samples, poisson_samples),
+    Distribution = factor(rep(c("Binomial", "Poisson"), each = 1000)),
+    n = rep(n, 2000)
+  )
+  
+  # Crear un gráfico comparativo para la distribución binomial y de Poisson
+  gg <- ggplot(data, aes(x = Value, fill = Distribution)) +
+    geom_density(alpha = 0.5) +
+    labs(title = paste("Comparativa entre Binomial y Poisson (n =", n, ")"),
+         x = "Valores", y = "Densidad") +
+    theme_minimal() +
+    scale_fill_manual(values = c("Binomial" = "blue", "Poisson" = "red"))
+  
+  print(gg)
+}
+```
+
+Para ambas distribuciones (binomial y de Poisson), a medida que el tamaño de la muestra "n" aumenta, las gráficas de densidad de las medias de las muestras se vuelven más simétricas y se acercan a una distribución normal. Esto demuestra la aplicación del Teorema Central del Límite y cómo las distribuciones se comportan de manera más predecible y normal a medida que se trabaja con tamaños de muestra más grandes.
 
 # Bloque 2
 
