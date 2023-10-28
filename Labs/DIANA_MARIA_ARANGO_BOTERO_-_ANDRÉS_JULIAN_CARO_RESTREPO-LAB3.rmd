@@ -23,23 +23,18 @@ ventacasas <- read.csv("../Databases/ventacasas.csv")
 ```{r}
 
 precio_promedio <- mean(ventacasas$Precio)
-print(precio_promedio)
+cat("Precio promedio:", precio_promedio, "\n")
 
 area_promedio <- mean(ventacasas$Area)
-print(area_promedio)
+cat("Area promedio:", area_promedio, "\n")
 
 desviacion_precio <- sd(ventacasas$Precio)
-print(desviacion_precio)
+cat("Desviacion precio", desviacion_precio, "\n")
 
 desviacion_area <- sd(ventacasas$Area)
-print(desviacion_area)
+cat("Desviacion area", desviacion_area, "\n")
 
-rango_precio <- max(ventacasas$Precio) - min(ventacasas$Precio);
-print(rango_precio)
-
-rango_area <- max(ventacasas$Area) - min(ventacasas$Area)
-print(rango_area)
-
+print("Resumen de datos:")
 #resumen: 
 summary(ventacasas$Precio)
 summary(ventacasas$Area)
@@ -68,6 +63,9 @@ for (n in tamanos_muestra) {
 }
 ```
 
+#### Analisis:
+A medida que se utilizan más datos en las muestras, se nota que la precisión de la media se acerca cada vez más a la obtenida en el punto a. Es evidente que las muestras con 1500 y 2000 datos son las más precisas.
+
 ## c)
 
 ```{r}
@@ -91,6 +89,8 @@ hist(medias_100, main = "Histograma (n = 100)", xlab = "Media del Área")
     
 
 ```
+#### Analisis:
+Gracias al gráfico y la distribución que se observa, se puede ver cómo el tamaño de la muestra afecta la precisión de las estimaciones. Al ser una gran cantidad de muestras, el resultado se asemeja mucho al resultado que se esperaria teoricamente
 
 
 ## Problema 2
@@ -117,7 +117,7 @@ for (n in tamanos_muestra) {
 ```
 
 ```{r}
-#Medias de 5000 pruebas 
+#Medias de 5000 pruebas. Para pruebas usar 1000 o 100
 
 medias_10 <- numeric(5000)
 medias_50 <- numeric(5000)
@@ -171,6 +171,8 @@ legend("topright", legend = c("Promedio de Precio", "Promedios Muestrales"),
 
 ```
 
+#### Analisis:
+Gracias a la grafica se puede apreciar la variabilidad en las medias muestrales y cómo se distribuyen en comparación con el promedio de la población. 
 
 ## Problema 3
 
@@ -209,6 +211,7 @@ for (n in n_values) {
 }
 ```
 
+#### Interpretación:
 Para ambas distribuciones (binomial y de Poisson), a medida que el tamaño de la muestra "n" aumenta, las gráficas de densidad de las medias de las muestras se vuelven más simétricas y se acercan a una distribución normal. Esto demuestra la aplicación del Teorema Central del Límite y cómo las distribuciones se comportan de manera más predecible y normal a medida que se trabaja con tamaños de muestra más grandes.
 
 # Bloque 2
