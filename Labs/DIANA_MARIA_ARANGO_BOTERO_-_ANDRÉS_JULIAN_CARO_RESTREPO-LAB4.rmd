@@ -13,6 +13,19 @@ output:
 
 ## Problema 1
 
+Cargar en archivo csv
+```{r}
+datos <- read.csv("../Databases/ventaypub.csv"); datos
+```
+Grafico de dispersión
+
+```{r}
+plot(datos$Publicidad, datos$Ventas, main = "Dispesión", xlab = "Publicidad", ylab = "Ventas")
+```
+```{r}
+mod = lm(Ventas ~ Publicidad, data = datos); mod
+summary(mod)
+```
 # Bloque 2
 
 ## Problema 2
