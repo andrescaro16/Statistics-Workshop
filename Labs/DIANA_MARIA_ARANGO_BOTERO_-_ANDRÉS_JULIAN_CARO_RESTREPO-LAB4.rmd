@@ -8,24 +8,101 @@ output:
   pdf_document: default
 ---
 
-
 # Bloque 1
 
 ## Problema 1
 
 Cargar en archivo csv
-```{r}
-datos <- read.csv("../Databases/ventaypub.csv"); datos
-```
-Grafico de dispersión
 
 ```{r}
-plot(datos$Publicidad, datos$Ventas, main = "Dispesión", xlab = "Publicidad", ylab = "Ventas")
+ventypub <- read.csv("../Databases/ventaypub.csv"); ventypub
 ```
+
+**Grafico de dispersión**
+
 ```{r}
-mod = lm(Ventas ~ Publicidad, data = datos); mod
+plot(ventypub$Publicidad, ventypub$Ventas, main = "Dispesión", xlab = "Publicidad", ylab = "Ventas")
+```
+
+```{r}
+# Calculamos la regresión lineal
+mod = lm(Ventas ~ Publicidad, data = ventypub);
+
+# Sacamos los coeficientes de la regresión lineal
+beta_0 <- coef(mod_min_cuadrados)["(Intercept)"]
+beta_1 <- coef(mod_min_cuadrados)["Publicidad"]
+
+# Imprimimos los resultados
+print(paste0("Coeficiente beta_0 (Intercept): ", round(beta_0, 4)))
+print(paste0("Coeficiente beta_1 (Publicidad): ", round(beta_1, 4)))
+```
+
+```{r}
+# Correlación entre variables
+correlacion <- cor(ventypub$Publicidad, ventypub$Ventas)
+
+# Venta variable o adicional por gastos en publicidad
+venta_adicional <- coef(model)["Publicidad"]
+
+# Imprimimos los resultados
+print(paste0("Correlación entre Publicidad y Ventas: ", round(correlacion, 4)))
+print(paste0("Venta variable o adicional por gastos en publicidad: ", round(venta_adicional, 4)))
+```
+
+**Fórmula del modelo:**\
+Y = Beta0 + Beta1 · X + Epsilon
+
+-   Y es la variable de respuesta (en este caso, las ventas).
+
+-   X es la variable predictora (los gastos en publicidad).
+
+-   Beta0 es la ordenada al origen (el valor de Y cuando X es 0).
+
+-   Beta1​ es la pendiente de la línea de regresión (el cambio en Y por unidad de cambio en X).
+
+-   Epsilon representa el error, es decir, la diferencia entre la predicción del modelo y el valor real de Y.
+
+Entonces nuestra formula quedaría de la forma:
+
+Ventas = Beta0​ + Beta1 ​⋅ Publicidad + Epsilon
+
+[Insertar comparación]
+
+Varianza:
+
+```{r}
+# Obtener los residuos del modelo
+residuos <- resid(mod)
+
+# Calcular la varianza de los residuos (s^2)
+varianza_residuos <- sum(residuos^2) / (length(residuos) - 2)
+
+# Mostrar el resultado
+cat("Estimación de s^2 (varianza de los residuos):", round(varianza_residuos, 2), "\n")
+```
+
+```{r}
+# Resumen del modelo lineal
 summary(mod)
 ```
+
+[Insertar inferencia]
+
+[Insertar "¿El ajuste del modelo lineal es sólido?"...]
+
+¿Cuál es el ingreso por ventas si se tiene un costo de publicidad de 22 millones de pesos?
+
+```{r}
+# Definimos el nuevo dato para la predicción
+nuevo_dato <- data.frame(Publicidad = 22)
+
+# Predecimos el ingreso por ventas
+prediccion <- predict(mod, newdata = nuevo_dato)
+
+# Mostramos el resultado
+print(paste("El ingreso por ventas proyectado es:", round(prediccion, 2), "millones de pesos"))
+```
+
 # Bloque 2
 
 ## Problema 2
