@@ -27,16 +27,16 @@ plot(ventypub$Publicidad, ventypub$Ventas, main = "Dispesión", xlab = "Publicid
 Hay una correlación positiva entre las dos variables, lo que significa que a medida que aumentan los costos de publicidad, también lo hacen las ventas. Sin embargo, la relación no es lineal, hay algunos valores atípicos. Esto signiifica que la publicidad aumenta las ventas, pero también hay otros factores que influyen y esto provoca que el aumento en ventas no justfique la cantidad que se gasta en publicidad.
 
 ```{r}
-# Calcular la regresión lineal
+# Calculamos la regresión lineal
 n <- nrow(ventypub)
 mean_x <- mean(ventypub$Publicidad)
 mean_y <- mean(ventypub$Ventas)
 
-# Calcular los coeficientes de la regresión lineal
+# Calculamos los coeficientes de la regresión lineal
 beta_1 <- sum((ventypub$Publicidad - mean_x) * (ventypub$Ventas - mean_y)) / sum((ventypub$Publicidad - mean_x)^2)
 beta_0 <- mean_y - beta_1 * mean_x
 
-# Imprimir los resultados
+# Imprimimos los resultados
 cat("Coeficiente beta_0 (Intercepto):", round(beta_0, 4), "\n")
 cat("Coeficiente beta_1 (Publicidad):", round(beta_1, 4), "\n")
 ```
@@ -86,13 +86,13 @@ Usando lm se llega al mismo lado que usando las formulas del principio de minimo
 Varianza:
 
 ```{r}
-# Obtener los residuos del modelo
+# Obtenemos los residuos del modelo
 residuos <- resid(mod)
 
-# Calcular la varianza de los residuos (s^2)
+# Calculamos la varianza de los residuos (s^2)
 varianza_residuos <- sum(residuos^2) / (length(residuos) - 2)
 
-# Mostrar el resultado
+# Mostramos el resultado
 cat("Estimación de s^2 (varianza de los residuos):", round(varianza_residuos, 2), "\n")
 ```
 
@@ -126,7 +126,7 @@ print(paste("El ingreso por ventas proyectado es:", round(prediccion, 2), "millo
 # Estimación puntual de la desviación estándar
 desviacion_estandar <- sd(residuos)
 
-# Mostrar el resultado
+# Mostramos el resultado
 cat("Estimación puntual de la desviación estándar:", round(desviacion_estandar, 2), "\n")
 ```
 
@@ -168,7 +168,7 @@ conf_int_normalidad <- c(qnorm(0.025), qnorm(1 - 0.025))
 conf_int_normalidad
 ```
 
-¿Modelo estadísticamente significativo?
+**¿Modelo estadísticamente significativo?**
 
 ```{r}
 # Prueba de significancia F
@@ -190,3 +190,42 @@ La prueba de significancia F evalúa la hipótesis nula de que todos los coefici
 -   **Intercepto (Beta0):** El coeficiente del intercepto es 6.06611, y el p-valor asociado es casi cero. Esto indica que el intercepto es significativamente diferente de cero, lo cual es consistente con la lógica de que si los gastos en publicidad son cero, aún se esperan ventas.
 
 -   **Publicidad (Beta1):** El coeficiente de la variable de Publicidad es 0.20175, y el p-valor es 0.0256. Esto sugiere que el coeficiente de Publicidad es significativamente diferente de cero, lo que significa que hay evidencia de que los gastos en publicidad tienen un efecto significativo en las ventas.
+
+**Coeficientes adicionales:**
+
+-   **R-cuadrado:** El R-cuadrado es 0.1213, lo que significa que aproximadamente el 12.13% de la variabilidad en las ventas se explica por el modelo.
+
+-   **F-statistic:** El valor F es 5.384, y su p-valor es 0.02565, que es consistente con el resultado de la prueba de significancia F.
+
+Por lo que en vista de los resultados, decimos que el modelo lineal es estadísticamente significativo, y hay evidencia de que la variable de Publicidad tiene un efecto significativo en las ventas.
+
+**Matriz de varianzas y covarianzas**
+
+```{r}
+# Calculamos la matriz de varianzas y covarianzas
+cov_matrix <- vcov(mod)
+
+# Mostramos la matriz de covarianzas
+print("Matriz de Varianzas y Covarianzas:")
+print(cov_matrix)
+```
+
+1.  **Intercepto (Beta0):** La varianza del intercepto es aproximadamente 1.05. La covarianza entre el intercepto y la publicidad es negativa, lo que nos indica que hay una relación inversa entre el intercepto y la pendiente (coeficiente de publicidad).
+
+2.  **Publicidad (Beta1):** La varianza de la publicidad es aproximadamente 0.0076. La covarianza entre la publicidad y el intercepto es negativa, lo que nos sugiere una relación inversa entre ellos.
+
+**Errores estándares de los coeficientes**
+
+```{r}
+# Coeficientes del modelo
+coefs <- coef(mod)
+
+# Error estándar de cada coeficiente
+se_coefs <- sqrt(diag(cov_matrix))
+
+# Mostramos los resultados
+cat("Error estándar de los coeficientes:\n")
+for (i in seq_along(coefs)) {
+  cat(paste0(names(coefs)[i], ": ", round(se_coefs[i], 4), "\n"))
+}
+```
