@@ -167,3 +167,26 @@ Intervalo de confianza del 95% para la normalidad
 conf_int_normalidad <- c(qnorm(0.025), qnorm(1 - 0.025))
 conf_int_normalidad
 ```
+
+¿Modelo estadísticamente significativo?
+
+```{r}
+# Prueba de significancia F
+anova_result <- anova(mod)
+print("Prueba de significancia F:")
+print(anova_result)
+
+# Pruebas t para cada coeficiente
+print("Pruebas t para los coeficientes:")
+summary(mod)
+```
+
+**Prueba de significancia F:**
+
+La prueba de significancia F evalúa la hipótesis nula de que todos los coeficientes del modelo, excepto el intercepto, son iguales a cero. El p-valor asociado con la prueba es 0.02565, que es menor que el nivel de significancia típicamente elegido de 0.05. Por lo tanto, podemos rechazar la hipótesis nula y concluir que al menos una de las variables predictoras (Publicidad en este caso) tiene un efecto significativo en las ventas. En otras palabras, el modelo en su conjunto es estadísticamente significativo.
+
+**Pruebas t para los coeficientes:**
+
+-   **Intercepto (Beta0):** El coeficiente del intercepto es 6.06611, y el p-valor asociado es casi cero. Esto indica que el intercepto es significativamente diferente de cero, lo cual es consistente con la lógica de que si los gastos en publicidad son cero, aún se esperan ventas.
+
+-   **Publicidad (Beta1):** El coeficiente de la variable de Publicidad es 0.20175, y el p-valor es 0.0256. Esto sugiere que el coeficiente de Publicidad es significativamente diferente de cero, lo que significa que hay evidencia de que los gastos en publicidad tienen un efecto significativo en las ventas.
