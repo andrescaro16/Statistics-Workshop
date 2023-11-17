@@ -23,30 +23,42 @@ ventypub <- read.csv("../Databases/ventaypub.csv"); ventypub
 ```{r}
 plot(ventypub$Publicidad, ventypub$Ventas, main = "Dispesión", xlab = "Publicidad", ylab = "Ventas")
 ```
+Hay una correlación positiva entre las dos variables, lo que significa que a medida que aumentan los costos de publicidad, también lo hacen las ventas. Sin embargo, la relación no es lineal, hay algunos valores atípicos. Esto signiifica que la publicidad  aumenta las ventas, pero también hay otros factores que influyen y esto provoca que el aumento en ventas no justfique la cantidad que se gasta en publicidad.
 
 ```{r}
-# Calculamos la regresión lineal
-mod = lm(Ventas ~ Publicidad, data = ventypub);
+# Calcular la regresión lineal
+n <- nrow(ventypub)
+mean_x <- mean(ventypub$Publicidad)
+mean_y <- mean(ventypub$Ventas)
 
-# Sacamos los coeficientes de la regresión lineal
-beta_0 <- coef(mod_min_cuadrados)["(Intercept)"]
-beta_1 <- coef(mod_min_cuadrados)["Publicidad"]
+# Calcular los coeficientes de la regresión lineal
+beta_1 <- sum((ventypub$Publicidad - mean_x) * (ventypub$Ventas - mean_y)) / sum((ventypub$Publicidad - mean_x)^2)
+beta_0 <- mean_y - beta_1 * mean_x
 
-# Imprimimos los resultados
-print(paste0("Coeficiente beta_0 (Intercept): ", round(beta_0, 4)))
-print(paste0("Coeficiente beta_1 (Publicidad): ", round(beta_1, 4)))
+# Imprimir los resultados
+cat("Coeficiente beta_0 (Intercepto):", round(beta_0, 4), "\n")
+cat("Coeficiente beta_1 (Publicidad):", round(beta_1, 4), "\n")
 ```
+La venta variable o adicional es beta_1 lo que quiere decir que cada que aumenta en 1 la publicidad las ventas aumentan en 0.2018.
 
 ```{r}
 # Correlación entre variables
 correlacion <- cor(ventypub$Publicidad, ventypub$Ventas)
 
-# Venta variable o adicional por gastos en publicidad
-venta_adicional <- coef(model)["Publicidad"]
-
 # Imprimimos los resultados
 print(paste0("Correlación entre Publicidad y Ventas: ", round(correlacion, 4)))
-print(paste0("Venta variable o adicional por gastos en publicidad: ", round(venta_adicional, 4)))
+```
+```{r}
+# Calculamos la regresión lineal con lm
+mod = lm(Ventas ~ Publicidad, data = ventypub);
+
+# Sacamos los coeficientes de la regresión lineal
+beta_0 <- coef(mod)["(Intercept)"]
+beta_1 <- coef(mod)["Publicidad"]
+
+# Imprimimos los resultados
+print(paste0("Coeficiente beta_0 (Intercept): ", round(beta_0, 4)))
+print(paste0("Coeficiente beta_1 (Publicidad): ", round(beta_1, 4)))
 ```
 
 **Fórmula del modelo:**\
@@ -66,7 +78,8 @@ Entonces nuestra formula quedaría de la forma:
 
 Ventas = Beta0​ + Beta1 ​⋅ Publicidad + Epsilon
 
-[Insertar comparación]
+Usando lm se llega al mismo lado que usando las formulas del principio de minimos cuadrados, lo que nos quiere decir que son equivalentes.
+
 
 Varianza:
 
