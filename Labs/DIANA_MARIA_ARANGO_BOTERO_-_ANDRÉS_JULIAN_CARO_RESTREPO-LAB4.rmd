@@ -23,7 +23,8 @@ ventypub <- read.csv("../Databases/ventaypub.csv"); ventypub
 ```{r}
 plot(ventypub$Publicidad, ventypub$Ventas, main = "Dispesión", xlab = "Publicidad", ylab = "Ventas")
 ```
-Hay una correlación positiva entre las dos variables, lo que significa que a medida que aumentan los costos de publicidad, también lo hacen las ventas. Sin embargo, la relación no es lineal, hay algunos valores atípicos. Esto signiifica que la publicidad  aumenta las ventas, pero también hay otros factores que influyen y esto provoca que el aumento en ventas no justfique la cantidad que se gasta en publicidad.
+
+Hay una correlación positiva entre las dos variables, lo que significa que a medida que aumentan los costos de publicidad, también lo hacen las ventas. Sin embargo, la relación no es lineal, hay algunos valores atípicos. Esto signiifica que la publicidad aumenta las ventas, pero también hay otros factores que influyen y esto provoca que el aumento en ventas no justfique la cantidad que se gasta en publicidad.
 
 ```{r}
 # Calcular la regresión lineal
@@ -39,6 +40,7 @@ beta_0 <- mean_y - beta_1 * mean_x
 cat("Coeficiente beta_0 (Intercepto):", round(beta_0, 4), "\n")
 cat("Coeficiente beta_1 (Publicidad):", round(beta_1, 4), "\n")
 ```
+
 La venta variable o adicional es beta_1 lo que quiere decir que cada que aumenta en 1 la publicidad las ventas aumentan en 0.2018.
 
 ```{r}
@@ -48,6 +50,7 @@ correlacion <- cor(ventypub$Publicidad, ventypub$Ventas)
 # Imprimimos los resultados
 print(paste0("Correlación entre Publicidad y Ventas: ", round(correlacion, 4)))
 ```
+
 ```{r}
 # Calculamos la regresión lineal con lm
 mod = lm(Ventas ~ Publicidad, data = ventypub);
@@ -79,7 +82,6 @@ Entonces nuestra formula quedaría de la forma:
 Ventas = Beta0​ + Beta1 ​⋅ Publicidad + Epsilon
 
 Usando lm se llega al mismo lado que usando las formulas del principio de minimos cuadrados, lo que nos quiere decir que son equivalentes.
-
 
 Varianza:
 
@@ -119,3 +121,49 @@ print(paste("El ingreso por ventas proyectado es:", round(prediccion, 2), "millo
 # Bloque 2
 
 ## Problema 2
+
+```{r}
+# Estimación puntual de la desviación estándar
+desviacion_estandar <- sd(residuos)
+
+# Mostrar el resultado
+cat("Estimación puntual de la desviación estándar:", round(desviacion_estandar, 2), "\n")
+```
+
+Análisis de linealidad:
+
+```{r}
+# Gráfico de dispersión entre las variables predictoras y los residuos
+plot(ventypub$Publicidad, residuos, main = "Análisis de Linealidad", xlab = "Publicidad", ylab = "Residuos")
+```
+
+Análisis de homocedasticidad
+
+```{r}
+# Gráfico de dispersión entre los valores ajustados y los residuos estandarizados
+plot(fitted(mod), rstandard(mod), main = "Análisis de Homocedasticidad", xlab = "Valores Ajustados", ylab = "Residuos Estandarizados")
+```
+
+Gráfico de normalidad de los residuos estandarizados
+
+```{r}
+# Gráfico de cuantiles cuantiles para evaluar la normalidad de los residuos estandarizados
+qqnorm(rstandard(mod))
+qqline(rstandard(mod))
+```
+
+Contraste de hipótesis sobre normalidad
+
+```{r}
+# Prueba de normalidad de Shapiro-Wilk
+shapiro_test <- shapiro.test(residuos)
+shapiro_test
+```
+
+Intervalo de confianza del 95% para la normalidad
+
+```{r}
+# Intervalo de confianza del 95% para la normalidad
+conf_int_normalidad <- c(qnorm(0.025), qnorm(1 - 0.025))
+conf_int_normalidad
+```
