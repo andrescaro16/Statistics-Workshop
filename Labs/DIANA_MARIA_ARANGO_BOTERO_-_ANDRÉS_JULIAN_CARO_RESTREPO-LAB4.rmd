@@ -130,26 +130,21 @@ desviacion_estandar <- sd(residuos)
 cat("Estimación puntual de la desviación estándar:", round(desviacion_estandar, 2), "\n")
 ```
 
-Análisis de linealidad:
+### Análisis de linealidad y homocedasticidad:
+
+**Gráfico de dispersión entre los valores ajustados y los residuos estandarizados**
 
 ```{r}
-# Gráfico de dispersión entre las variables predictoras y los residuos
-plot(ventypub$Publicidad, residuos, main = "Análisis de Linealidad", xlab = "Publicidad", ylab = "Residuos")
+plot(mod, which = 1)
 ```
 
-Análisis de homocedasticidad
+De esta gráfica podemos ver que parece cumplirse la propiedad de linealidad, ya que los puntos se distribuyen de manera aleatoria y no parecen seguir un patrón. Por otro lado, podemos también ver que parecen tener la propiedad de homocedasticidad puesto que la varianza de los residuos parece ser constante y no parece que exista un patrón reconocible.
 
-```{r}
-# Gráfico de dispersión entre los valores ajustados y los residuos estandarizados
-plot(fitted(mod), rstandard(mod), main = "Análisis de Homocedasticidad", xlab = "Valores Ajustados", ylab = "Residuos Estandarizados")
-```
-
-Gráfico de normalidad de los residuos estandarizados
+**Gráfico de normalidad de los residuos estandarizados**
 
 ```{r}
 # Gráfico de cuantiles cuantiles para evaluar la normalidad de los residuos estandarizados
-qqnorm(rstandard(mod))
-qqline(rstandard(mod))
+plot(mod, which = 2)
 ```
 
 Contraste de hipótesis sobre normalidad
@@ -160,32 +155,21 @@ shapiro_test <- shapiro.test(residuos)
 shapiro_test
 ```
 
-Intervalo de confianza del 95% para la normalidad
-
-```{r}
-# Intervalo de confianza del 95% para la normalidad
-conf_int_normalidad <- c(qnorm(0.025), qnorm(1 - 0.025))
-conf_int_normalidad
-```
+Con esta prueba y un valor de significancia de 5%, podemos concluir que no hay suficiente evidencia para decir que los residuos no se distribuyen normalmente.
 
 **¿Modelo estadísticamente significativo?**
 
-```{r}
-# Prueba de significancia F
-anova_result <- anova(mod)
-print("Prueba de significancia F:")
-print(anova_result)
+Para saber esto hacemos las pruebas de significancia F y t con la siguiente función:
 
-# Pruebas t para cada coeficiente
-print("Pruebas t para los coeficientes:")
-summary(mod)
+```{r}
+resumen <- summary(mod);resumen
 ```
 
 **Prueba de significancia F:**
 
 La prueba de significancia F evalúa la hipótesis nula de que todos los coeficientes del modelo, excepto el intercepto, son iguales a cero. El p-valor asociado con la prueba es 0.02565, que es menor que el nivel de significancia típicamente elegido de 0.05. Por lo tanto, podemos rechazar la hipótesis nula y concluir que al menos una de las variables predictoras (Publicidad en este caso) tiene un efecto significativo en las ventas. En otras palabras, el modelo en su conjunto es estadísticamente significativo.
 
-**Pruebas t para los coeficientes:**
+**Pruebas t para los coeficientes:** *¿β0 y β1 estadísticamente significativos?*
 
 -   **Intercepto (Beta0):** El coeficiente del intercepto es 6.06611, y el p-valor asociado es casi cero. Esto indica que el intercepto es significativamente diferente de cero, lo cual es consistente con la lógica de que si los gastos en publicidad son cero, aún se esperan ventas.
 
@@ -194,8 +178,6 @@ La prueba de significancia F evalúa la hipótesis nula de que todos los coefici
 **Coeficientes adicionales:**
 
 -   **R-cuadrado:** El R-cuadrado es 0.1213, lo que significa que aproximadamente el 12.13% de la variabilidad en las ventas se explica por el modelo.
-
--   **F-statistic:** El valor F es 5.384, y su p-valor es 0.02565, que es consistente con el resultado de la prueba de significancia F.
 
 Por lo que en vista de los resultados, decimos que el modelo lineal es estadísticamente significativo, y hay evidencia de que la variable de Publicidad tiene un efecto significativo en las ventas.
 
@@ -228,4 +210,33 @@ cat("Error estándar de los coeficientes:\n")
 for (i in seq_along(coefs)) {
   cat(paste0(names(coefs)[i], ": ", round(se_coefs[i], 4), "\n"))
 }
+# También pueden sacarse de summary(mod)
 ```
+
+**Intervalos de confianza del 95 % y 99 % para los parámetros β0 y β1**
+
+```{r}
+# Calcular el intervalo de confianza del 95%
+confint(mod, level = 0.95)
+
+# Calcular el intervalo de confianza del 99%
+confint(mod, level = 0.99)
+```
+
+Los intervalos de confianza te dan un rango de valores dentro del cual podemos estar bastante seguiros de que se encuentra el verdadero valor de los parámetros. Tambien nos puede dar un indicio de si el parámetro es estadísticamente significativo por ejemplo, con un nivel de confianza del 99% el intervalo de confianza de la Publicidad incluye al cero, por lo que este paramétro no es estadisticamente significativo para ese nivel de confianza.
+
+**Intervalo del 95% para ventas promedio \$7.5M en publicidad**
+
+```{r}
+predict(mod, newdata=data.frame(Publicidad = 7.5), interval="confidence")
+```
+
+Este intervalo nos da un rango en el que se puede estar bastante seguro de que se encuentra el verdadero valor de las ventas promedio cuando los gastos en publicidad son 7.5M de pesos
+
+**Intervalo del 95% para ventas \$11M en publicidad**
+
+```{r}
+predict(mod, newdata=data.frame(Publicidad = 11), interval="prediction")
+```
+
+Este intervalo nos da un rango en el que se puede estar bastante seguro de que se encuentra el verdadero valor de las ventas cuando los gastos en publicidad son 11M de pesos
