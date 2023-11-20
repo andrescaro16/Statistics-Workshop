@@ -102,7 +102,7 @@ cat("Estimación de s^2 (varianza de los residuos):", round(varianza_residuos, 2
 ### Interpretacion
 
 La varianza de los residuos mide cuánto se dispersan los residuos alrededor de la línea de regresión.
-Considerango el rango de los datos, podria considerar que es una variabilidad alta. 
+Considerando el rango de los datos, un 7.41 indica que hay una gran dispersión/variabilidad en los datos de las ventas. 
 
 
 ```{r}
